@@ -295,9 +295,9 @@ class Header {
         $dateFormat = 'D, d M Y H:i:s';
 
         if (is_numeric($time)) {
-        	if ($time < 0) {
-            	throw new HttpException('Could not parse time: provided time should be a positive number');
-        	}
+            if ($time < 0) {
+                throw new HttpException('Could not parse time: provided time should be a positive number');
+            }
 
             // timestamp
             $converted = new DateTime('@' . $time);

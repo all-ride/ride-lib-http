@@ -13,12 +13,12 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToString() {
-    	$this->hc->addHeader('content-type', 'application/json');
-    	$this->hc->addHeader('content-length', 25);
+        $this->hc->addHeader('content-type', 'application/json');
+        $this->hc->addHeader('content-length', 25);
 
-    	$expected = "Content-Type: application/json\r\nContent-Length: 25\r\n";
+        $expected = "Content-Type: application/json\r\nContent-Length: 25\r\n";
 
-    	$this->assertEquals($expected, (string) $this->hc);
+        $this->assertEquals($expected, (string) $this->hc);
     }
 
     public function testAddHeaderWithHeaderInstance() {
@@ -26,12 +26,12 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
         $header = new Header($name, 'value');
 
         $this->assertEquals(array(), $this->hc->getHeaders());
-		$this->assertFalse($this->hc->hasHeaders());
+        $this->assertFalse($this->hc->hasHeaders());
 
         $this->hc->addHeader($header);
 
         $this->assertEquals(array($header), $this->hc->getHeaders());
-		$this->assertTrue($this->hc->hasHeaders());
+        $this->assertTrue($this->hc->hasHeaders());
     }
 
     public function testAddHeaderMultipleTimes() {
@@ -242,24 +242,24 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
      * @expectedException pallo\library\http\exception\HttpException
      */
     public function testAddCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided($directive, $value) {
-    	$this->hc->addCacheControlDirective($directive, $value);
+        $this->hc->addCacheControlDirective($directive, $value);
     }
 
     public function providerAddCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided() {
-    	return array(
-    		array($this, 'value'),
-    		array(array(), 'value'),
-    		array('name', $this),
-    		array('name', array()),
-    	);
+        return array(
+            array($this, 'value'),
+            array(array(), 'value'),
+            array('name', $this),
+            array('name', array()),
+        );
     }
 
     public function testAddCacheControlHeaderWillParseDirectives() {
-    	$this->hc->addHeader('Cache-Control', 'private,max-age=60,test="test value"');
+        $this->hc->addHeader('Cache-Control', 'private,max-age=60,test="test value"');
 
-    	$this->assertEquals(true, $this->hc->getCacheControlDirective('private'));
-    	$this->assertEquals(60, $this->hc->getCacheControlDirective('max-age'));
-    	$this->assertEquals('test value', $this->hc->getCacheControlDirective('test'));
+        $this->assertEquals(true, $this->hc->getCacheControlDirective('private'));
+        $this->assertEquals(60, $this->hc->getCacheControlDirective('max-age'));
+        $this->assertEquals('test value', $this->hc->getCacheControlDirective('test'));
     }
 
     public function testGetCacheControlDirective() {
@@ -282,10 +282,10 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function providerGetCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided() {
-    	return array(
-    		array($this),
-    		array(array()),
-    	);
+        return array(
+            array($this),
+            array(array()),
+        );
     }
 
     public function testRemoveCacheControlDirective() {
@@ -315,14 +315,14 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
      * @expectedException pallo\library\http\exception\HttpException
      */
     public function testRemoveCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided($directive) {
-    	$this->hc->removeCacheControlDirective($directive);
+        $this->hc->removeCacheControlDirective($directive);
     }
 
     public function providerRemoveCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided() {
-    	return array(
-			array($this),
-    		array(array()),
-    	);
+        return array(
+            array($this),
+            array(array()),
+        );
     }
 
     public function testIterator() {

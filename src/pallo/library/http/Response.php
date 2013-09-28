@@ -204,8 +204,8 @@ class Response {
         $this->statusCode = $statusCode;
     }
 
-	/**
-	 * Returns the current HTTP status code.
+    /**
+     * Returns the current HTTP status code.
      * @return integer
      */
     public function getStatusCode() {
@@ -622,7 +622,7 @@ class Response {
      */
     public function setNotModified() {
         $this->setStatusCode(self::STATUS_CODE_NOT_MODIFIED);
-		$this->setBody(null);
+        $this->setBody(null);
 
         $removeHeaders = array(
             Header::HEADER_ALLOW,
@@ -656,17 +656,17 @@ class Response {
 
     /**
      * Sends the response to the client
-	 * @param Request $request Request to respond to
+     * @param Request $request Request to respond to
      * @return null
      */
     public function send(Request $request) {
-    	$this->sendHeaders($request->getProtocol());
+        $this->sendHeaders($request->getProtocol());
 
-    	if ($this->willRedirect()) {
-    	    return;
-    	}
+        if ($this->willRedirect()) {
+            return;
+        }
 
-		echo $this->body;
+        echo $this->body;
     }
 
     /**
@@ -677,26 +677,26 @@ class Response {
      * @see pallo\library\http\Header
      */
     protected function sendHeaders($protocol) {
-		if (!$this->headers->hasHeaders() && $this->statusCode === Response::STATUS_CODE_OK) {
-			return;
-		}
+        if (!$this->headers->hasHeaders() && $this->statusCode === Response::STATUS_CODE_OK) {
+            return;
+        }
 
-		if (headers_sent($file, $line)) {
-			throw new HttpException('Cannot send headers, output already started in ' . $file . ' on line ' . $line);
-		}
+        if (headers_sent($file, $line)) {
+            throw new HttpException('Cannot send headers, output already started in ' . $file . ' on line ' . $line);
+        }
 
-		// set the status code
-		header($protocol . ' ' . $this->statusCode);
+        // set the status code
+        header($protocol . ' ' . $this->statusCode);
 
-    	// set the headers
+        // set the headers
         foreach ($this->headers as $header) {
-        	header((string) $header, false);
-		}
+            header((string) $header, false);
+        }
 
-		// set the cookies
-		foreach ($this->cookies as $cookie) {
-		    header(Header::HEADER_SET_COOKIE . ': ' . $cookie, false);
-		}
+        // set the cookies
+        foreach ($this->cookies as $cookie) {
+            header(Header::HEADER_SET_COOKIE . ': ' . $cookie, false);
+        }
     }
 
 }

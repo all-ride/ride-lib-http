@@ -8,6 +8,12 @@ namespace pallo\library\http\session\io;
 interface SessionIO {
 
     /**
+     * Gets the timeout of the sessions
+     * @return integer Timeout in seconds
+     */
+    public function getTimeout();
+
+    /**
      * Cleans up the sessions which are invalidated
      * @param boolean $force Set to true to clear all sessions
      * @return null

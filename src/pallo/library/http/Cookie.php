@@ -16,8 +16,8 @@ class Cookie {
     protected $name;
 
     /**
-	 * Value of the cookie
-	 * @var string
+     * Value of the cookie
+     * @var string
      */
     protected $value;
 
@@ -72,8 +72,8 @@ class Cookie {
             $this->value = null;
             $this->expires = time() - 7777777;
         } else {
-	        $this->setValue($value);
-	        $this->setExpires($expires);
+            $this->setValue($value);
+            $this->setExpires($expires);
         }
 
         $this->setName($name);
@@ -223,7 +223,7 @@ class Cookie {
      */
     protected function setPath($path) {
         if ($path !== null && (!is_string($path) || $path == '')) {
-		    throw new HttpException('Could not set cookie path: provided path is not a string or is empty');
+            throw new HttpException('Could not set cookie path: provided path is not a string or is empty');
         }
 
         $this->path = $path;

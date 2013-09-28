@@ -162,7 +162,7 @@ class Request {
      * @return null
      */
     public function setIsSecure($isSecure) {
-    	$this->isSecure = $isSecure;
+        $this->isSecure = $isSecure;
     }
 
     /**
@@ -170,7 +170,7 @@ class Request {
      * @return boolean
      */
     public function isSecure() {
-    	return $this->isSecure;
+        return $this->isSecure;
     }
 
     /**
@@ -242,11 +242,11 @@ class Request {
      * protocol is provided
      */
     protected function setProtocol($protocol) {
-    	if (!is_string($protocol) || !$protocol) {
-    		throw new HttpException('Provided protocol is empty or not a string');
-    	}
+        if (!is_string($protocol) || !$protocol) {
+            throw new HttpException('Provided protocol is empty or not a string');
+        }
 
-    	$this->protocol = $protocol;
+        $this->protocol = $protocol;
     }
 
     /**
@@ -254,7 +254,7 @@ class Request {
      * @return string
      */
     public function getProtocol() {
-    	return $this->protocol;
+        return $this->protocol;
     }
 
     /**
@@ -316,7 +316,7 @@ class Request {
      * @return string
      */
     public function getQuery() {
-    	return $this->query;
+        return $this->query;
     }
 
     /**
@@ -327,7 +327,9 @@ class Request {
      * default otherwise
      */
     public function getQueryParameter($name, $default = null) {
-        return $this->getParameterByName($this->getQueryParameters(), $name, $default);
+        $this->getQueryParameters();
+
+        return $this->getParameterByName($this->queryParameters, $name, $default);
     }
 
     /**
@@ -335,9 +337,9 @@ class Request {
      * @return array
      */
     public function getQueryParameters() {
-		if ($this->queryParameters === null && $this->query) {
-    		$this->queryParameters = $this->parseQueryString($this->query);
-		}
+        if ($this->queryParameters === null && $this->query) {
+            $this->queryParameters = $this->parseQueryString($this->query);
+        }
 
         return $this->queryParameters;
     }
@@ -363,10 +365,10 @@ class Request {
             $this->bodyParameters = $body;
             $this->body = null;
         } elseif (is_scalar($body) || $body === null) {
-//         	$this->bodyParameters = array();
-        	$this->body = $body;
+//             $this->bodyParameters = array();
+            $this->body = $body;
         } else {
-        	throw new HttpException('Could not set the body of this request: no array or scalar value provided');
+            throw new HttpException('Could not set the body of this request: no array or scalar value provided');
         }
     }
 
@@ -375,14 +377,14 @@ class Request {
      * @return string
      */
     public function getBody() {
-    	if (!$this->body && $this->bodyParameters) {
+        if (!$this->body && $this->bodyParameters) {
             $contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
             if ($contentType == 'application/json') {
                 $this->body = json_encode($this->bodyParameters);
             } elseif ($contentType == 'application/x-www-form-urlencoded') {
                 $this->body = $this->getBodyParametersAsString();
             }
-    	}
+        }
 
         return $this->body;
     }
@@ -395,7 +397,9 @@ class Request {
      * default otherwise
      */
     public function getBodyParameter($name, $default = null) {
-        return $this->getParameterByName($this->getBodyParameters(), $name, $default);
+        $this->getBodyParameters();
+
+        return $this->getParameterByName($this->bodyParameters, $name, $default);
     }
 
     /**
@@ -403,16 +407,16 @@ class Request {
      * @return array
      */
     public function getBodyParameters() {
-    	if ($this->bodyParameters === null && $this->body) {
-    		$contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
-    		if ($contentType == 'application/json') {
-    			$this->bodyParameters = json_decode($this->body, true);
-    		} elseif ($contentType == 'application/x-www-form-urlencoded') {
-    			$this->bodyParameters = $this->parseQueryString($this->body);
-    		} else {
-    			$this->bodyParameters = array();
-    		}
-    	}
+        if ($this->bodyParameters === null && $this->body) {
+            $contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
+            if ($contentType == 'application/json') {
+                $this->bodyParameters = json_decode($this->body, true);
+            } elseif ($contentType == 'application/x-www-form-urlencoded') {
+                $this->bodyParameters = $this->parseQueryString($this->body);
+            } else {
+                $this->bodyParameters = array();
+            }
+        }
 
         return $this->bodyParameters;
     }
