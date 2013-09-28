@@ -186,18 +186,18 @@ class HeaderContainer implements Iterator, Countable {
      * @return array Array with Header objects
      */
     public function getHeaders() {
-    	$headers = array();
-    	foreach ($this as $header) {
-    		if (is_array($header)) {
-    			foreach ($header as $h) {
-    				$headers[] = $h;
-    			}
-    		} else {
-    			$headers[] = $header;
-    		}
-    	}
+        $headers = array();
+        foreach ($this as $header) {
+            if (is_array($header)) {
+                foreach ($header as $h) {
+                    $headers[] = $h;
+                }
+            } else {
+                $headers[] = $header;
+            }
+        }
 
-    	return $headers;
+        return $headers;
     }
 
     /**
@@ -268,7 +268,7 @@ class HeaderContainer implements Iterator, Countable {
      * @return array
      */
     public function getCacheControlDirectives() {
-    	return $this->cacheControl;
+        return $this->cacheControl;
     }
 
     /**
