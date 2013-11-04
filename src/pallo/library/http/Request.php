@@ -337,8 +337,12 @@ class Request {
      * @return array
      */
     public function getQueryParameters() {
-        if ($this->queryParameters === null && $this->query) {
-            $this->queryParameters = $this->parseQueryString($this->query);
+        if ($this->queryParameters === null) {
+            if ($this->query) {
+                $this->queryParameters = $this->parseQueryString($this->query);
+            } else {
+                $this->queryParameters = array();
+            }
         }
 
         return $this->queryParameters;
@@ -379,6 +383,11 @@ class Request {
     public function getBody() {
         if (!$this->body && $this->bodyParameters) {
             $contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
+
+            if (strpos($contentType, ';') !== false) {
+                list($contentType, $attributes) = explode(';', $contentType);
+            }
+
             if ($contentType == 'application/json') {
                 $this->body = json_encode($this->bodyParameters);
             } elseif ($contentType == 'application/x-www-form-urlencoded') {
@@ -409,6 +418,11 @@ class Request {
     public function getBodyParameters() {
         if ($this->bodyParameters === null && $this->body) {
             $contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
+
+            if (strpos($contentType, ';') !== false) {
+                list($contentType, $attributes) = explode(';', $contentType);
+            }
+
             if ($contentType == 'application/json') {
                 $this->bodyParameters = json_decode($this->body, true);
             } elseif ($contentType == 'application/x-www-form-urlencoded') {
