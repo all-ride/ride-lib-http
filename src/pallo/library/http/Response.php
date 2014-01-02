@@ -10,6 +10,18 @@ use pallo\library\http\exception\HttpException;
 class Response {
 
     /**
+     * HTTP status code for a continue status
+     * @var int
+     */
+    const STATUS_CODE_CONTINUE = 100;
+
+    /**
+     * HTTP status code for a switching protocols status
+     * @var int
+     */
+    const STATUS_CODE_SWITCHING_PROTOCOLS = 101;
+
+    /**
      * HTTP status code for a ok status
      * @var int
      */
@@ -22,10 +34,40 @@ class Response {
     const STATUS_CODE_CREATED = 201;
 
     /**
+     * HTTP status code for a accepted status
+     * @var int
+     */
+    const STATUS_CODE_ACCEPTED = 202;
+
+    /**
+     * HTTP status code for a non-authoritative information status
+     * @var int
+     */
+    const STATUS_CODE_NON_AUTHORITATIVE_INFORMATION = 203;
+
+    /**
      * HTTP status code for a no content status
      * @var int
      */
     const STATUS_CODE_NO_CONTENT = 204;
+
+    /**
+     * HTTP status code for a reset content status
+     * @var int
+     */
+    const STATUS_CODE_NO_CONTENT = 205;
+
+    /**
+     * HTTP status code for a partial content status
+     * @var int
+     */
+    const STATUS_CODE_PARTIAL_CONTENT = 206;
+
+    /**
+     * HTTP status code for a multiple choices status
+     * @var int
+     */
+    const STATUS_CODE_MULTIPLE_CHOICES = 300;
 
     /**
      * HTTP status code for a moved permanently status
@@ -40,10 +82,28 @@ class Response {
     const STATUS_CODE_FOUND = 302;
 
     /**
+     * HTTP status code for a see other status
+     * @var int
+     */
+    const STATUS_CODE_SEE_OTHER = 303;
+
+    /**
      * HTTP status code for a not modified status
      * @var int
      */
     const STATUS_CODE_NOT_MODIFIED = 304;
+
+    /**
+     * HTTP status code for a use proxy status
+     * @var int
+     */
+    const STATUS_CODE_USE_PROXY = 305;
+
+    /**
+     * HTTP status code for a temporary redirect status
+     * @var int
+     */
+    const STATUS_CODE_TEMPORARY_REDIRECT = 307;
 
     /**
      * HTTP status code for a bad request status
@@ -56,6 +116,12 @@ class Response {
      * @var int
      */
     const STATUS_CODE_UNAUTHORIZED = 401;
+
+    /**
+     * HTTP status code for a payment required status
+     * @var int
+     */
+    const STATUS_CODE_PAYMENT_REQUIRED = 402;
 
     /**
      * HTTP status code for a forbidden status
@@ -106,14 +172,14 @@ class Response {
     const STATUS_CODE_SERVER_ERROR = 500;
 
     /**
-     * HTTP status code for a unimplemented request
+     * HTTP status code for a unimplemented status
      * @var int
      */
     const STATUS_CODE_NOT_IMPLEMENTED = 501;
 
     /**
-     * HTTP status code
-     * @var unknown_type
+     * HTTP status code for a unavailable service status
+     * @var int
      */
     const STATUS_CODE_SERVICE_UNAVAILABLE = 503;
 
@@ -697,6 +763,48 @@ class Response {
         foreach ($this->cookies as $cookie) {
             header(Header::HEADER_SET_COOKIE . ': ' . $cookie, false);
         }
+    }
+
+    /**
+     * Gets the status phrase for the provided status code
+     * @param integer $statusCode HTTP response status code
+     * @return string HTTP response status phrase
+     */
+    public static function getStatusPhrase($statusCode) {
+        $statusPhrases = array(
+            self::STATUS_CODE_CONTINUE => 'Continue', // 100
+            self::STATUS_CODE_SWITCHING_PROTOCOLS => 'Switching Protocols', // 101
+            self::STATUS_CODE_OK => 'OK', // 200
+            self::STATUS_CODE_CREATED => 'Created', // 201
+            self::STATUS_CODE_ACCEPTED => 'Accepted', // 202
+            self::STATUS_CODE_NON_AUTHORITATIVE_INFORMATION => 'Non-Authoritative Information', // 203
+            self::STATUS_CODE_NO_CONTENT => 'No Content', // 204
+            self::STATUS_CODE_RESET_CONTENT => 'Reset Content', // 205
+            self::STATUS_CODE_PARTIAL_CONTENT => 'Partial Content', // 206
+            self::STATUS_CODE_MULTIPLE_CHOICES => 'Multiple Choices', // 300
+            self::STATUS_CODE_MOVED_PERMANENTLY => 'Moved Permanently', // 301
+            self::STATUS_CODE_FOUND => 'Found', // 302
+            self::STATUS_CODE_SEE_OTHER => 'See Other', // 303
+            self::STATUS_CODE_NOT_MODIFIED => 'Not Modified', // 304
+            self::STATUS_CODE_USE_PROXY => 'Use Proxy', // 305
+            self::STATUS_CODE_TEMPORARY_REDIRECT => 'Temporary Redirect', // 307
+            self::STATUS_CODE_BAD_REQUEST => 'Bad Request', // 400
+            self::STATUS_CODE_UNAUTHORIZED => 'Unauthorized', // 401
+            self::STATUS_CODE_PAYMENT_REQUIRED => 'Payment Required', // 402
+            self::STATUS_CODE_FORBIDDEN => 'Forbidden', // 403
+            self::STATUS_CODE_NOT_FOUND => 'Not Found', // 404
+            self::STATUS_CODE_METHOD_NOT_ALLOWED => 'Method Not Allowed', //405
+            self::STATUS_CODE_UNPROCESSABLE_ENTITY => 'Unprocessable Entity', //422
+            self::STATUS_CODE_SERVER_ERROR => 'Internal Server Error', // 500
+            self::STATUS_CODE_NOT_IMPLEMENTED => 'Not Implemented', //501
+            self::STATUS_CODE_SERVICE_UNAVAILABLE => 'Service Unavailable', //503
+        );
+
+        if (!isset($statusPhrases[$statusCode])) {
+            return 'Unknown Status';
+        }
+
+        return $statusPhrases[$statusCode];
     }
 
 }
