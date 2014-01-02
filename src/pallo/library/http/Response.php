@@ -55,7 +55,7 @@ class Response {
      * HTTP status code for a reset content status
      * @var int
      */
-    const STATUS_CODE_NO_CONTENT = 205;
+    const STATUS_CODE_RESET_CONTENT = 205;
 
     /**
      * HTTP status code for a partial content status
