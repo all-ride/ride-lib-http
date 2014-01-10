@@ -1,0 +1,17 @@
+{
+    "name": "pallo/lib-http",
+    "description": "HTTP library of the Pallo framework",
+    "license": "MIT",
+    "version": "0.2.4",
+    "authors": [
+        {
+            "name": "Joris Vandeweerd",
+            "email": "joris@statik.be"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "pallo\\library\\http\\": ["src/", "test/src/"]
+        }
+    }
+}
