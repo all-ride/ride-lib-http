@@ -416,7 +416,11 @@ class Request {
      * @return array
      */
     public function getBodyParameters() {
-        if ($this->bodyParameters === null && $this->body) {
+        if ($this->bodyParameters != null) {
+            return $this->bodyParameters;
+        }
+
+        if ($this->body) {
             $contentType = $this->getHeader(Header::HEADER_CONTENT_TYPE);
 
             if (strpos($contentType, ';') !== false) {
@@ -430,6 +434,8 @@ class Request {
             } else {
                 $this->bodyParameters = array();
             }
+        } else {
+            $this->bodyParameters = array();
         }
 
         return $this->bodyParameters;
