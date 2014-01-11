@@ -369,7 +369,6 @@ class Request {
             $this->bodyParameters = $body;
             $this->body = null;
         } elseif (is_scalar($body) || $body === null) {
-//             $this->bodyParameters = array();
             $this->body = $body;
         } else {
             throw new HttpException('Could not set the body of this request: no array or scalar value provided');
@@ -416,7 +415,7 @@ class Request {
      * @return array
      */
     public function getBodyParameters() {
-        if ($this->bodyParameters != null) {
+        if ($this->bodyParameters !== null) {
             return $this->bodyParameters;
         }
 
