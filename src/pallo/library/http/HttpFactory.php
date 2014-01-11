@@ -142,12 +142,6 @@ class HttpFactory {
 
         $body = implode("\n", $data);
 
-
-        // @todo parse body
-        // $contentType = $headers->getHeader(Header::HEADER_CONTENT_TYPE);
-        // if ($body && $contentType) {
-        // }
-
         $class = $this->getRequestClass();
 
         return new $class($path, $method, $protocol, $headers, $body);
@@ -185,8 +179,13 @@ class HttpFactory {
         } else {
             $body = file_get_contents('php://input');
         }
+
         if (!$body) {
-            $body = null;
+            $body = array();
+        }
+
+        if ($_FILES && is_array($body)) {
+            $body = $this->mergeFiles($body, $_FILES);
         }
 
         $class = $this->getRequestClass();
@@ -198,6 +197,56 @@ class HttpFactory {
         }
 
         return $request;
+    }
+
+    /**
+     * Merge and normalize the files array with the provided data
+     * @param array $data Submitted form data
+     * @param array $files File upload definitions ($_FILES)
+     * @return array Provided data merged with the file uploads
+     */
+    protected function mergeFiles(array $data, array $files) {
+        foreach ($files as $index => $attributes) {
+            if (!is_array(reset($attributes))) {
+                $data[$index] = $attributes;
+
+                continue;
+            }
+
+            foreach ($attributes as $attribute => $nestedAttributes) {
+                if (!isset($data[$index]) || !is_array($data[$index])) {
+                    $data[$index] = array();
+                }
+
+                $data[$index] = $this->normalizeFileAttributes($data[$index], $nestedAttributes, $attribute);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Adds the attributes to the data array and sets the actual value a level
+     * deeper with the attribute as key
+     * @param array $data
+     * @param array $values
+     * @param string $attribute
+     * @return array Provided data with the values in the attribute key
+     */
+    protected function normalizeFileAttributes(array $data, array $values, $attribute) {
+        foreach ($values as $key => $value) {
+            if (!isset($data[$key])) {
+                $data[$key] = array();
+            }
+
+            if (is_array($value)) {
+                $data[$key] = $this->normalizeFileAttributes($data[$key], $value, $attribute);
+            } else {
+                $data[$key][$attribute] = $value;
+            }
+        }
+
+        return $data;
     }
 
     /**
