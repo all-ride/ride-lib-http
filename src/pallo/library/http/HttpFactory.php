@@ -298,12 +298,14 @@ class HttpFactory {
                 continue;
             }
 
-            $position = strpos($line, ': ');
+            $position = strpos($line, ':');
             if (!$position) {
                 throw new HttpException('Could not parse the response: "' . $line . '" is not a valid header string');
             }
 
-            list($name, $value) = explode(': ', $line, 2);
+            list($name, $value) = explode(':', $line, 2);
+            $name = trim($name);
+            $value = trim($value);
 
             $response->addHeader($name, $value);
         }

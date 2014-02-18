@@ -102,8 +102,19 @@ class HeaderContainer implements Iterator, Countable {
         } elseif (isset($this->headers[$headerName])) {
             if (is_array($this->headers[$headerName])) {
                 // already some headers set with this name, just add it
-                $this->headers[$headerName][] = $header;
-            } else {
+                $found = false;
+                foreach ($this->headers[$headerName] as $existingHeader) {
+                    if ($existingHeader->getValue() !== $value) {
+                        $found = true;
+
+                        break;
+                    }
+                }
+
+                if (!$found) {
+                    $this->headers[$headerName][] = $header;
+                }
+            } elseif ($this->headers[$headerName]->getValue() !== $value) {
                 // already a header set with this name, convert to array and
                 // add it
                 $this->headers[$headerName] = array(
@@ -336,6 +347,14 @@ class HeaderContainer implements Iterator, Countable {
         }
 
         return $cacheControl;
+    }
+
+    /**
+     * Sorts the headers by name
+     * @return null
+     */
+    public function sort() {
+        ksort($this->headers);
     }
 
     /**

@@ -102,7 +102,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         $_POST = array();
         $headers = new HeaderContainer();
         $headers->addHeader('Host', 'localhost');
-        $request = new Request('/', 'GET', 'HTTP/1.0', $headers);
+        $request = new Request('/', 'GET', 'HTTP/1.0', $headers, array());
 
         $result = $this->httpFactory->createRequestFromServer();
         $this->assertEquals($request, $result);
@@ -110,7 +110,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         $_SERVER = array(
             'SCRIPT_NAME' => 'index.php',
         );
-        $request = new Request('/index.php', 'GET', 'HTTP/1.0', $headers);
+        $request = new Request('/index.php', 'GET', 'HTTP/1.0', $headers, array());
 
         $result = $this->httpFactory->createRequestFromServer();
         $this->assertEquals($request, $result);
