@@ -115,6 +115,46 @@ class HttpFactory {
     }
 
     /**
+     * Creates a request manually
+     * @param string $path Path of the request
+     * @param string $method Method of the request
+     * @param string $protocol Protocol of the Request
+     * @param pallo\library\http\HeaderContainer $headers
+     * @param string|array $body
+     * @param string $isSecure
+     * @return Request
+     */
+    public function createRequest($path = '/', $method = null, $protocol = null, $headers = null, $body = null, $isSecure = null) {
+        if (!$method) {
+            if (isset($_SERVER['REQUEST_METHOD'])) {
+                $method = $_SERVER['REQUEST_METHOD'];
+            } else {
+                $method = Request::METHOD_GET;
+            }
+        }
+
+        if (!$protocol) {
+            if (isset($_SERVER['SERVER_PROTOCOL'])) {
+                $protocol = $_SERVER['SERVER_PROTOCOL'];
+            } else {
+                $protocol = 'HTTP/1.0';
+            }
+        }
+
+        if (!$headers) {
+            $headers = $this->createHeaderContainerFromServer();
+        }
+
+        $request = new $this->requestClass($path, $method, $protocol, $headers, $body);
+
+        if ($isSecure) {
+            $request->setIsSecure(true);
+        }
+
+        return $request;
+    }
+
+    /**
      * Creates a request from a raw request string
      * @param string $data Raw HTTP request
      * @return Request
@@ -144,7 +184,7 @@ class HttpFactory {
 
         $class = $this->getRequestClass();
 
-        return new $class($path, $method, $protocol, $headers, $body);
+        return $this->createRequest($path, $method, $protocol, $headers, $body);
     }
 
     /**
@@ -152,12 +192,6 @@ class HttpFactory {
      * @return Request
      */
     public function createRequestFromServer() {
-        if (isset($_SERVER['REQUEST_METHOD'])) {
-            $method = $_SERVER['REQUEST_METHOD'];
-        } else {
-            $method = Request::METHOD_GET;
-        }
-
         if (isset($_SERVER['REQUEST_URI'])) {
             $path = $_SERVER['REQUEST_URI'];
         } elseif (isset($_SERVER['SCRIPT_NAME'])) {
@@ -165,14 +199,6 @@ class HttpFactory {
         } else {
             $path = '/';
         }
-
-        if (isset($_SERVER['SERVER_PROTOCOL'])) {
-            $protocol = $_SERVER['SERVER_PROTOCOL'];
-        } else {
-            $protocol = 'HTTP/1.0';
-        }
-
-        $headers = $this->createHeaderContainerFromServer();
 
         if ($_POST) {
             $body = $_POST;
@@ -188,15 +214,13 @@ class HttpFactory {
             $body = $this->mergeFiles($body, $_FILES);
         }
 
-        $class = $this->getRequestClass();
-
-        $request = new $class($path, $method, $protocol, $headers, $body);
-
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-            $request->setIsSecure(true);
+            $isSecure = true;
+        } else {
+            $isSecure = false;
         }
 
-        return $request;
+        return $this->createRequest($path, null, null, null, $body, $isSecure);
     }
 
     /**
