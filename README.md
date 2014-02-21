@@ -1,6 +1,6 @@
-# Pallo: HTTP Library
+# Ride: HTTP Library
 
-HTTP library of the PHP Pallo framework.
+HTTP library of the PHP Ride framework.
 
 ## Code Sample
 
@@ -8,7 +8,7 @@ Check this code sample to see the possibilities of this library:
 
     <?php
     
-    use pallo\library\http\HttpFactory;
+    use ride\library\http\HttpFactory;
         
     $httpFactory = new HttpFactory();
         
