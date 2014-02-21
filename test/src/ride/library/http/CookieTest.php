@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -42,7 +42,7 @@ class CookieTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerConstructThrowsExceptionWhenInvalidArgumentsProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testConstructThrowsExceptionWhenInvalidArgumentsProvided($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly) {
         new Cookie($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly);

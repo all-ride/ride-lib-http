@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http\session\io;
+namespace ride\library\http\session\io;
 
 /**
  * Interface for the session input/output to storage

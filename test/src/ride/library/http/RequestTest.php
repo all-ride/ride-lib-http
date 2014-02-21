@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
-use pallo\library\http\session\io\SessionIO;
-use pallo\library\http\session\Session;
+use ride\library\http\session\io\SessionIO;
+use ride\library\http\session\Session;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -48,7 +48,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerConstructThrowsExceptionWhenInvalidArgumentsProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testConstructThrowsExceptionWhenInvalidArgumentsProvided($path, $method, $protocol, $headers, $body) {
         new Request($path, $method, $protocol, $headers, $body);
@@ -93,7 +93,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerGetQueryParameterThrowsExceptionWhenInvalidNameProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testGetQueryParameterThrowsExceptionWhenInvalidNameProvided($name) {
         $request = new Request('/');
@@ -147,7 +147,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSession() {
-        $sessionIo = $this->getMock('pallo\\library\\http\\session\\io\\SessionIO');
+        $sessionIo = $this->getMock('ride\\library\\http\\session\\io\\SessionIO');
         $session = new Session($sessionIo);
 
         $request = new Request('/');
@@ -229,10 +229,10 @@ class RequestTest extends PHPUnit_Framework_TestCase {
         $this->assertNull($request->getUserAgent());
 
         $headers = new HeaderContainer();
-        $headers->addHeader('User-Agent', 'Pallo');
+        $headers->addHeader('User-Agent', 'Ride');
         $request = new Request('/', 'GET', 'protocol', $headers);
 
-        $this->assertEquals('Pallo', $request->getUserAgent());
+        $this->assertEquals('Ride', $request->getUserAgent());
     }
 
     public function testIsXmlRequest() {

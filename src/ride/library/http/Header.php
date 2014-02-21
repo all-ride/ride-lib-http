@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
-use pallo\library\http\exception\HttpException;
+use ride\library\http\exception\HttpException;
 
 use \DateTime;
 use \DateTimeZone;
@@ -242,7 +242,7 @@ class Header {
      * Sets the value of this header
      * @param mixed $value The value of the header
      * @return null
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * value is invalid
      */
     private function setValue($value) {
@@ -266,7 +266,7 @@ class Header {
      * unify the name of a header to a specific format (eg Content-Length)
      * @param string $name The header name to unify
      * @return string Unified header name
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * name is not a string or is empty
      */
     public static function parseName($name) {
@@ -282,9 +282,9 @@ class Header {
      * @param integer|string $date A timestamp or a RFC2822 formatted date
      * @return integer|string A RFC2822 formatted date from the timestamp or a
      * timestamp from the RFC2822 formatted date
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * date is not a string or not numeric
-     * @throws pallo\library\http\HttpException when the formatted date could
+     * @throws ride\library\http\HttpException when the formatted date could
      * not be converted to a timestamp
      */
     public static function parseTime($time) {
@@ -322,7 +322,7 @@ class Header {
      * Taken from Symfony2
      * @param string $header Accept header value
      * @return array Array with the value as key and the preferable order as value
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * header value is not a string or is empty
      */
     public static function parseAccept($header) {
@@ -356,7 +356,7 @@ class Header {
      * Parses the ETags of a if match or if none match header
      * @param string $header If match of if none match header value
      * @return array Array with the ETag as key and weak flag as value
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * header value is empty or invalid
      */
     public static function parseIfMatch($header) {

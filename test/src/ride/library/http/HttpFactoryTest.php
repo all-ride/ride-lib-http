@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -13,7 +13,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSetRequestClass() {
-        $class = 'pallo\\library\\http\\TestRequest';
+        $class = 'ride\\library\\http\\TestRequest';
 
         $this->httpFactory->setRequestClass($class);
 
@@ -22,7 +22,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetRequestClassThrowsExceptionWhenInvalidClassProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetRequestClassThrowsExceptionWhenInvalidClassProvided($class) {
         $this->httpFactory->setRequestClass($class);
@@ -32,12 +32,12 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         return array(
             array($this),
             array('UnexistantClass'),
-            array('pallo\\library\\http\\Header'),
+            array('ride\\library\\http\\Header'),
         );
     }
 
     public function testSetResponseClass() {
-        $class = 'pallo\\library\\http\\TestResponse';
+        $class = 'ride\\library\\http\\TestResponse';
 
         $this->httpFactory->setResponseClass($class);
 
@@ -46,7 +46,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetResponseClassThrowsExceptionWhenInvalidClassProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetResponseClassThrowsExceptionWhenInvalidClassProvided($class) {
         $this->httpFactory->setResponseClass($class);
@@ -56,7 +56,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         return array(
             array($this),
             array('UnexistantClass'),
-            array('pallo\\library\\http\\Header'),
+            array('ride\\library\\http\\Header'),
         );
     }
 
@@ -187,7 +187,7 @@ foo bar';
 
     /**
      * @dataProvider providerCreateResponseFromStringThrowsExceptionOnInvalidReponse
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testCreateResponseFromStringThrowsExceptionOnInvalidReponse($string) {
         $this->httpFactory->createResponseFromString($string, "\n");

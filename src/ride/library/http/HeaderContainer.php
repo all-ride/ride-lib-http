@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
-use pallo\library\http\exception\HttpException;
+use ride\library\http\exception\HttpException;
 
 use \Countable;
 use \Iterator;
@@ -179,7 +179,7 @@ class HeaderContainer implements Iterator, Countable {
      * @param string $name Name of the header
      * @return Header|array|null An instance of Header of only 1 header set, an
      * array of Header objects if multiple values are set, null otherwise
-     * @throws pallo\library\http\exception\HttpException when the provided name
+     * @throws ride\library\http\exception\HttpException when the provided name
      * is empty or invalid
      */
     public function getHeader($name) {
@@ -215,7 +215,7 @@ class HeaderContainer implements Iterator, Countable {
      * Removes a header with the provided name
      * @param string|array $name Name of the header or an array with names
      * @return null
-     * @throws palloException when the provided name is empty or invalid
+     * @throws rideException when the provided name is empty or invalid
      */
     public function removeHeader($name) {
         if (!is_array($name)) {
@@ -237,7 +237,7 @@ class HeaderContainer implements Iterator, Countable {
      * @param string $value Value of the directive, true as flag, a value
      * otherwise
      * @return null
-     * @throws pallo\library\http\HttpException when the directive is empty or
+     * @throws ride\library\http\HttpException when the directive is empty or
      * not a string
      */
     public function addCacheControlDirective($directive, $value = true) {
@@ -259,7 +259,7 @@ class HeaderContainer implements Iterator, Countable {
      * @param string $directive Name of the directive
      * @return boolean|string|null The value of the directive if found, null
      * otherwise
-     * @throws pallo\library\http\exception\HttpException when the directive is empty or
+     * @throws ride\library\http\exception\HttpException when the directive is empty or
      * not a string
      */
     public function getCacheControlDirective($directive) {
@@ -286,7 +286,7 @@ class HeaderContainer implements Iterator, Countable {
      * Removes a cache control directive
      * @param string $directive Name of the directive
      * @return null
-     * @throws pallo\library\http\exception\HttpException when the directive
+     * @throws ride\library\http\exception\HttpException when the directive
      * is empty or not a string
      */
     public function removeCacheControlDirective($directive) {

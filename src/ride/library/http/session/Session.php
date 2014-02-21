@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\http\session;
+namespace ride\library\http\session;
 
-use pallo\library\http\session\io\SessionIO;
+use ride\library\http\session\io\SessionIO;
 
 /**
  * Session handler
@@ -11,7 +11,7 @@ class Session {
 
     /**
      * Session input/output
-     * @var pallo\library\http\session\io\SessionIO
+     * @var ride\library\http\session\io\SessionIO
      */
     protected $io;
 
@@ -29,7 +29,7 @@ class Session {
 
     /**
      * Constructs a new session handler
-     * @param pallo\library\http\session\io\SessionIO $io Input/output handler
+     * @param ride\library\http\session\io\SessionIO $io Input/output handler
      * for the session data
      * @return null
      */

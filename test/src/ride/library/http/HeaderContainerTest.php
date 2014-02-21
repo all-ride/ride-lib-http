@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -63,7 +63,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerAddHeaderWithInvalidValuesThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testAddHeaderWithInvalidValuesThrowsException($header, $value = null) {
         $this->hc->addHeader($header, $value);
@@ -114,7 +114,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerAddHeaderWithInvalidValuesThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetHeaderWithInvalidValuesThrowsException($header, $value = null) {
         $this->hc->setHeader($header, $value);
@@ -142,7 +142,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerHasHeaderThrowsExceptionWhenInvalidNameProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testHasHeaderThrowsExceptionWhenInvalidNameProvided($name) {
         $this->hc->hasHeader($name);
@@ -181,7 +181,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerGetHeaderThrowsExceptionWhenInvalidHeaderProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testGetHeaderThrowsExceptionWhenInvalidHeaderProvided($name) {
         $this->hc->getHeader($name);
@@ -239,7 +239,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerAddCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testAddCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided($directive, $value) {
         $this->hc->addCacheControlDirective($directive, $value);
@@ -275,7 +275,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerGetCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testGetCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided($directive) {
         $this->hc->getCacheControlDirective($directive);
@@ -312,7 +312,7 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerRemoveCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testRemoveCacheControlDirectiveThrowsExceptionWhenInvalidNameProvided($directive) {
         $this->hc->removeCacheControlDirective($directive);

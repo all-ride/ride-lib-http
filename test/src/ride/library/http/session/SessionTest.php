@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http\session;
+namespace ride\library\http\session;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -12,7 +12,7 @@ class SessionTest extends PHPUnit_Framework_TestCase {
             'var1' => 'value1',
         );
 
-        $io = $this->getMock('pallo\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
         $io->expects($this->once())->method('read')->with($this->equalTo($id))->will($this->returnValue($data));
         $io->expects($this->once())->method('write')->with($this->equalTo($id), $this->equalTo(array('var3' => 'value3')));
 

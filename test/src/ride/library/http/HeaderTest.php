@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
 use \PHPUnit_Framework_TestCase;
 
@@ -21,7 +21,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerConstructWithInvalidValuesThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testConstructWithInvalidValuesThrowsException($name, $value) {
         new Header($name, $value);
@@ -76,7 +76,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerParseTimeThrowsExceptionWhenInvalidValueProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testParseTimeThrowsExceptionWhenInvalidValueProvided($value) {
         Header::parseTime($value);
@@ -138,7 +138,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerParseAcceptThrowsExceptionWhenInvalidValueProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testParseAcceptThrowsExceptionWhenInvalidValueProvided($value) {
         Header::parseAccept($value);
@@ -175,7 +175,7 @@ class HeaderTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerParseIfMatchThrowsExceptionWhenInvalidValueProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testParseIfMatchThrowsExceptionWhenInvalidValueProvided($value) {
         Header::parseIfMatch($value);
