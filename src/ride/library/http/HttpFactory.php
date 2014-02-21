@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
-use pallo\library\http\exception\HttpException;
+use ride\library\http\exception\HttpException;
 
 use \ReflectionClass;
 use \ReflectionException;
@@ -28,7 +28,7 @@ class HttpFactory {
      * Sets the class name of the request object
      * @param string $requestClass Full class name of the request
      * @return null
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * class is invalid or not a subclass of the Request class
      */
     public function setRequestClass($requestClass) {
@@ -38,8 +38,8 @@ class HttpFactory {
 
         try {
             $reflection = new ReflectionClass($requestClass);
-            if (!$reflection->isSubclassOf('pallo\\library\\http\\Request')) {
-                throw new HttpException('Could not set the request class: ' . $requestClass . ' is not a subclass of pallo\\library\\http\\Request');
+            if (!$reflection->isSubclassOf('ride\\library\\http\\Request')) {
+                throw new HttpException('Could not set the request class: ' . $requestClass . ' is not a subclass of ride\\library\\http\\Request');
             }
         } catch (ReflectionException $exception) {
             throw new HttpException('Could not set the request class: provided class is invalid', 0, $exception);
@@ -53,14 +53,14 @@ class HttpFactory {
      * @return string
      */
     public function getRequestClass() {
-        return $this->requestClass ? $this->requestClass : 'pallo\\library\\http\\Request';
+        return $this->requestClass ? $this->requestClass : 'ride\\library\\http\\Request';
     }
 
     /**
      * Sets the class name of the response object
      * @param string $responseClass Full class name of the response
      * @return null
-     * @throws pallo\library\http\exception\HttpException when the provided
+     * @throws ride\library\http\exception\HttpException when the provided
      * class is invalid or not a subclass of the Response class
      */
     public function setResponseClass($responseClass) {
@@ -70,8 +70,8 @@ class HttpFactory {
 
         try {
             $reflection = new ReflectionClass($responseClass);
-            if (!$reflection->isSubclassOf('pallo\\library\\http\\Response')) {
-                throw new HttpException('Could not set the response class: ' . $responseClass . ' is not a subclass of pallo\\library\\http\\Response');
+            if (!$reflection->isSubclassOf('ride\\library\\http\\Response')) {
+                throw new HttpException('Could not set the response class: ' . $responseClass . ' is not a subclass of ride\\library\\http\\Response');
             }
         } catch (ReflectionException $exception) {
             throw new HttpException('Could not set the response class: provided class is invalid', 0, $exception);
@@ -85,7 +85,7 @@ class HttpFactory {
      * @return string
      */
     public function getResponseClass() {
-        return $this->responseClass ? $this->responseClass : 'pallo\\library\\http\\Response';
+        return $this->responseClass ? $this->responseClass : 'ride\\library\\http\\Response';
     }
 
     /**
@@ -119,7 +119,7 @@ class HttpFactory {
      * @param string $path Path of the request
      * @param string $method Method of the request
      * @param string $protocol Protocol of the Request
-     * @param pallo\library\http\HeaderContainer $headers
+     * @param ride\library\http\HeaderContainer $headers
      * @param string|array $body
      * @param string $isSecure
      * @return Request
@@ -275,7 +275,7 @@ class HttpFactory {
 
     /**
      * Creates a response
-     * @return pallo\library\http\Response
+     * @return ride\library\http\Response
      */
     public function createResponse() {
         $class = $this->getResponseClass();
@@ -287,8 +287,8 @@ class HttpFactory {
      * Creates a object from a raw HTTP response
      * @param string $data Raw HTTP response
      * @param string $lineBreak Line break of the response
-     * @return pallo\library\http\Response
-     * @throws pallo\library\http\exception\HttpException when the raw HTTP
+     * @return ride\library\http\Response
+     * @throws ride\library\http\exception\HttpException when the raw HTTP
      * response is not valid
      */
     public function createResponseFromString($data, $lineBreak = "\r\n") {

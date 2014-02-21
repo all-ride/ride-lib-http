@@ -1,13 +1,13 @@
 <?php
 
-namespace pallo\library\http;
+namespace ride\library\http;
 
 use \PHPUnit_Framework_TestCase;
 
 class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * @var pallo\library\http\Response
+     * @var ride\library\http\Response
      */
     protected $response;
 
@@ -40,7 +40,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetStatusCodeThrowsExceptionWhenInvalidStatusCodeProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetStatusCodeThrowsExceptionWhenInvalidStatusCodeProvided($statusCode) {
         $this->response->setStatusCode($statusCode);
@@ -123,7 +123,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetRedirectThrowsExceptionWhenInvalidArgumentProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetRedirectThrowsExceptionWhenInvalidArgumentProvided($url, $statusCode) {
         $this->response->setRedirect($url, $statusCode);
@@ -159,7 +159,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerSetExpiresThrowsExceptionWhenInvalidArgumentProvided
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetExpiresThrowsExceptionWhenInvalidArgumentProvided($time) {
         $this->response->setExpires($time);
@@ -218,7 +218,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerTestAgeThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetMaxAgeThrowsExceptionWhenInvalidArgumentProvided($age) {
         $this->response->setMaxAge($age);
@@ -226,7 +226,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerTestAgeThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetSharedMaxAgeThrowsExceptionWhenInvalidArgumentProvided($age) {
         $this->response->setSharedMaxAge($age);
@@ -250,7 +250,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @dataProvider providerTestAgeThrowsException
-     * @expectedException pallo\library\http\exception\HttpException
+     * @expectedException ride\library\http\exception\HttpException
      */
     public function testSetLastModifiedThrowsExceptionWhenInvalidArgumentProvided($time) {
         $this->response->setLastModified($time);
