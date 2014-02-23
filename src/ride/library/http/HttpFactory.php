@@ -230,6 +230,8 @@ class HttpFactory {
      * @return array Provided data merged with the file uploads
      */
     protected function mergeFiles(array $data, array $files) {
+        $originalData = $data;
+
         foreach ($files as $index => $attributes) {
             if (!is_array(reset($attributes))) {
                 $data[$index] = $attributes;
@@ -246,6 +248,8 @@ class HttpFactory {
             }
         }
 
+        $this->restoreNoUploadValues($data, $originalData);
+
         return $data;
     }
 
@@ -259,7 +263,7 @@ class HttpFactory {
      */
     protected function normalizeFileAttributes(array $data, array $values, $attribute) {
         foreach ($values as $key => $value) {
-            if (!isset($data[$key])) {
+            if (!isset($data[$key]) || is_string($data[$key])) {
                 $data[$key] = array();
             }
 
@@ -271,6 +275,26 @@ class HttpFactory {
         }
 
         return $data;
+    }
+
+    /**
+     * Restore the no file uploads with posted value with the same name if
+     * applicable
+     * @param array $data Body with the files merged into
+     * @param array $files File upload definitions ($_FILES)
+     * @param $original Original submitted values ($_POST)
+     * @return null
+     */
+    protected function restoreNoUploadValues(&$data, $original) {
+        foreach ($data as $index => $values) {
+            $issetOriginal = isset($original[$index]);
+
+            if (isset($values['error']) && $values['error'] == UPLOAD_ERR_NO_FILE && $values['size'] === 0 && $issetOriginal) {
+                $data[$index] = $original[$index];
+            } elseif (is_array($values)) {
+                $this->restoreNoUploadValues($data[$index], $issetOriginal ? $original[$index] : null);
+            }
+        }
     }
 
     /**
