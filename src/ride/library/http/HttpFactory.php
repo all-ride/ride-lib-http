@@ -28,7 +28,7 @@ class HttpFactory {
      * Sets the class name of the request object
      * @param string $requestClass Full class name of the request
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided
+     * @throws \ride\library\http\exception\HttpException when the provided
      * class is invalid or not a subclass of the Request class
      */
     public function setRequestClass($requestClass) {
@@ -60,7 +60,7 @@ class HttpFactory {
      * Sets the class name of the response object
      * @param string $responseClass Full class name of the response
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided
+     * @throws \ride\library\http\exception\HttpException when the provided
      * class is invalid or not a subclass of the Response class
      */
     public function setResponseClass($responseClass) {
@@ -119,7 +119,7 @@ class HttpFactory {
      * @param string $path Path of the request
      * @param string $method Method of the request
      * @param string $protocol Protocol of the Request
-     * @param ride\library\http\HeaderContainer $headers
+     * @param \ride\library\http\HeaderContainer $headers
      * @param string|array $body
      * @param string $isSecure
      * @return Request
@@ -299,7 +299,7 @@ class HttpFactory {
 
     /**
      * Creates a response
-     * @return ride\library\http\Response
+     * @return \ride\library\http\Response
      */
     public function createResponse() {
         $class = $this->getResponseClass();
@@ -311,8 +311,8 @@ class HttpFactory {
      * Creates a object from a raw HTTP response
      * @param string $data Raw HTTP response
      * @param string $lineBreak Line break of the response
-     * @return ride\library\http\Response
-     * @throws ride\library\http\exception\HttpException when the raw HTTP
+     * @return \ride\library\http\Response
+     * @throws \ride\library\http\exception\HttpException when the raw HTTP
      * response is not valid
      */
     public function createResponseFromString($data, $lineBreak = "\r\n") {
