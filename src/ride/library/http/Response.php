@@ -191,7 +191,7 @@ class Response {
 
     /**
      * Container of the headers assigned to this response
-     * @var ride\library\http\HeaderContainer
+     * @var \ride\library\http\HeaderContainer
      */
     protected $headers;
 
@@ -339,7 +339,7 @@ class Response {
     * @return string|array|null Value of the header, an array of values if the
     * header is set multiple times, provided default value if the header is not
     * set
-    * @see ride\library\http\Header
+    * @see \ride\library\http\Header
     */
     public function getHeader($name, $default = null) {
         $header = $this->headers->getHeader($name);
@@ -361,7 +361,7 @@ class Response {
 
     /**
      * Returns the HTTP headers.
-     * @return ride\library\http\HeaderContainer The container of the HTTP headers
+     * @return \ride\library\http\HeaderContainer The container of the HTTP headers
      */
     public function getHeaders() {
         return $this->headers;
@@ -458,7 +458,7 @@ class Response {
      * Sets the date the content will become stale
      * @param integer $timestamp Timestamp of the date
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided
+     * @throws \ride\library\http\exception\HttpException when the provided
      * timestamp is invalid
      */
     public function setExpires($timestamp = null) {
@@ -657,7 +657,7 @@ class Response {
 
     /**
      * Checks if the current status is not modified. If the status code is set
-     * @param ride\library\http\Request $request
+     * @param \ride\library\http\Request $request
      * @return boolean True if the content is not modified, false otherwise
      */
     public function isNotModified(Request $request) {
@@ -740,7 +740,7 @@ class Response {
      * @param string $protocol HTTP protocol to use
      * @return null
      * @throws Exception when the output already started
-     * @see ride\library\http\Header
+     * @see \ride\library\http\Header
      */
     protected function sendHeaders($protocol) {
         if (!$this->headers->hasHeaders() && $this->statusCode === Response::STATUS_CODE_OK) {

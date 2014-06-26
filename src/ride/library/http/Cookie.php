@@ -64,7 +64,7 @@ class Cookie {
      * @param boolean $isHttp Flag to use this cookie only in HTTP requests,
      * not in javascript calls
      * @return null
-     * @throws ride\library\http\exception\HttpException when a invalid value
+     * @throws \ride\library\http\exception\HttpException when a invalid value
      * has been provided
      */
     public function __construct($name, $value = null, $expires = 0, $domain = null, $path = null, $isSecure = false, $isHttpOnly = true) {
@@ -127,7 +127,7 @@ class Cookie {
     /**
      * Sets the name of the cookie
      * @param string $name Name of the cookie
-     * @throws ride\library\http\exception\HttpException when the name is
+     * @throws \ride\library\http\exception\HttpException when the name is
      * invalid or empty
      */
     protected function setName($name) {
@@ -149,7 +149,7 @@ class Cookie {
     /**
      * Sets the value for the cookie
      * @param mixed $value Value for the cookie
-     * @throws ride\library\http\exception\HttpException when the value is not
+     * @throws \ride\library\http\exception\HttpException when the value is not
      * a scalar value
      */
     protected function setValue($value) {
@@ -172,7 +172,7 @@ class Cookie {
      * Sets the expires date for the cookie
      * @param integer $expires UNIX timestamp
      * @return null
-     * @throws ride\library\http\exception\HttpException when the value is not
+     * @throws \ride\library\http\exception\HttpException when the value is not
      * a valid timestamp
      */
     protected function setExpires($expires) {
@@ -195,7 +195,7 @@ class Cookie {
      * Sets the domain for the cookie
      * @param string $domain
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided
+     * @throws \ride\library\http\exception\HttpException when the provided
      * domain is invalid or empty
      */
     protected function setDomain($domain) {
@@ -218,7 +218,7 @@ class Cookie {
      * Sets the path for the cookie
      * @param string $path
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided path
+     * @throws \ride\library\http\exception\HttpException when the provided path
      * is invalid or empty
      */
     protected function setPath($path) {
@@ -241,7 +241,7 @@ class Cookie {
      * Sets whether this cookie is only available in secure connections
      * @param boolean $flag
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided flag
+     * @throws \ride\library\http\exception\HttpException when the provided flag
      * is not a boolean
      */
     protected function setIsSecure($flag) {
@@ -265,7 +265,7 @@ class Cookie {
      * javascript requests
      * @param boolean $flag
      * @return null
-     * @throws ride\library\http\exception\HttpException when the provided flag
+     * @throws \ride\library\http\exception\HttpException when the provided flag
      * is not a boolean
      */
     protected function setIsHttpOnly($flag) {

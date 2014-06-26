@@ -11,7 +11,7 @@ class Session {
 
     /**
      * Session input/output
-     * @var ride\library\http\session\io\SessionIO
+     * @var \ride\library\http\session\io\SessionIO
      */
     protected $io;
 
@@ -35,7 +35,7 @@ class Session {
 
     /**
      * Constructs a new session handler
-     * @param ride\library\http\session\io\SessionIO $io Input/output handler
+     * @param \ride\library\http\session\io\SessionIO $io Input/output handler
      * for the session data
      * @return null
      */
