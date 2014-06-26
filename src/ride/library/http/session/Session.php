@@ -28,6 +28,12 @@ class Session {
     protected $data;
 
     /**
+     * Flag to see if the session is changed
+     * @var boolean
+     */
+    protected $isChanged;
+
+    /**
      * Constructs a new session handler
      * @param ride\library\http\session\io\SessionIO $io Input/output handler
      * for the session data
@@ -37,6 +43,7 @@ class Session {
         $this->io = $io;
         $this->id = null;
         $this->data = array();
+        $this->isChanged = false;
     }
 
     /**
@@ -55,6 +62,7 @@ class Session {
     public function read($id) {
         $this->id = $id;
         $this->data = $this->io->read($this->id);
+        $this->isChanged = false;
     }
 
     /**
@@ -101,6 +109,8 @@ class Session {
         } elseif (isset($this->data[$key])) {
             unset($this->data[$key]);
         }
+
+        $this->isChanged = true;
     }
 
     /**
@@ -109,6 +119,15 @@ class Session {
      */
     public function reset() {
         $this->data = array();
+        $this->isChanged = true;
+    }
+
+    /**
+     * Gets whether this session has changed
+     * @return boolean
+     */
+    public function isChanged() {
+        return $this->isChanged;
     }
 
 }
