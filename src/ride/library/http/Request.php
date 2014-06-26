@@ -84,7 +84,7 @@ class Request {
 
     /**
      * Container with the request headers
-     * @var ride\library\http\HeaderContainer
+     * @var \ride\library\http\HeaderContainer
      */
     protected $headers;
 
@@ -108,7 +108,7 @@ class Request {
 
     /**
      * Instance of the session
-     * @var ride\library\http\session\Session
+     * @var \ride\library\http\session\Session
      */
     protected $session;
 
@@ -176,7 +176,7 @@ class Request {
     /**
      * Sets the method of this request
      * @param string $method The method
-     * @throws ride\library\http\exception\HttpException when an invalid
+     * @throws \ride\library\http\exception\HttpException when an invalid
      * method is provided
      */
     protected function setMethod($method) {
@@ -238,7 +238,7 @@ class Request {
     /**
      * Sets the protocol version of the request
      * @param string $protocol The protocol
-     * @throws ride\library\http\exception\HttpException when an invalid
+     * @throws \ride\library\http\exception\HttpException when an invalid
      * protocol is provided
      */
     protected function setProtocol($protocol) {
@@ -260,7 +260,7 @@ class Request {
     /**
      * Sets the requested path
      * @param string $path The requested path
-     * @throws ride\library\http\exception\HttpException when an invalid path
+     * @throws \ride\library\http\exception\HttpException when an invalid path
      * is provided
      */
     protected function setPath($path) {
@@ -361,7 +361,7 @@ class Request {
      * Sets the body of this request
      * @param string|array $body
      * @return null
-     * @throws ride\library\http\exception\HttpException when a invalid body
+     * @throws \ride\library\http\exception\HttpException when a invalid body
      * has been provided
      */
     public function setBody($body) {
@@ -456,7 +456,7 @@ class Request {
      * @param mixed $default Default value for the parameter
      * @return mixed The value of the query parameter if set, the provided
      * default otherwise
-     * @throws ride\library\http\exception\HttpException when the provided
+     * @throws \ride\library\http\exception\HttpException when the provided
      * parameter name is empty or invalid
      */
     protected function getParameterByName(array &$parameters = null, $name, $default = null) {
@@ -525,7 +525,7 @@ class Request {
      * @param string $name Name of the header
      * @return string|array|null The value of the header, an array of values if
      * the header is set multiple times, null if not set
-     * @see ride\library\http\Header
+     * @see \ride\library\http\Header
      */
     public function getHeader($name) {
         if (!$this->headers->hasHeader($name)) {
@@ -548,7 +548,7 @@ class Request {
 
     /**
      * Returns the HTTP headers.
-     * @return ride\library\http\HeaderContainer The container of the HTTP
+     * @return \ride\library\http\HeaderContainer The container of the HTTP
      * headers
      */
     public function getHeaders() {
@@ -695,7 +695,7 @@ class Request {
 
     /**
      * Sets the session container
-     * @param ride\library\http\session\Session $session
+     * @param \ride\library\http\session\Session $session
      * @return null
      */
     public function setSession(Session $session = null) {
@@ -712,7 +712,7 @@ class Request {
 
     /**
      * Gets the session container
-     * @return ride\library\http\session\Session
+     * @return \ride\library\http\session\Session
      */
     public function getSession() {
         return $this->session;
