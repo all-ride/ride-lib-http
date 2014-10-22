@@ -136,6 +136,8 @@ class Request {
         $this->setCookies();
 
         $this->isSecure = false;
+
+        $this->parseOverridenMethod();
     }
 
     /**
@@ -233,6 +235,33 @@ class Request {
      */
     public function isDelete() {
         return $this->method == self::METHOD_DELETE;
+    }
+
+    /**
+     * Parses the overriden method from the headers as actual request method
+     * @return null
+     */
+    protected function parseOverridenMethod() {
+        if (!$this->isPost()) {
+            return;
+        }
+
+        $headerNames = array(
+            'X-HTTP-Method-Override',
+            'X-HTTP-Method',
+            'X-Method-Override',
+        );
+
+        foreach ($headerNames as $headerName) {
+            $header = $this->headers->getHeader('X-HTTP-Method-Override');
+            if (!$header) {
+                continue;
+            }
+
+            $this->setMethod($header->getValue());
+
+            break;
+        }
     }
 
     /**
