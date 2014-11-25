@@ -756,60 +756,8 @@ class Request {
         $query = array();
 
         $string = ltrim($string, '?');
-        $tokens = explode('&', $string);
 
-        foreach ($tokens as $token) {
-            $positionEquals = strpos($token, '=');
-            if ($positionEquals !== false) {
-                // = found, we have a key and a value
-                $key = substr($token, 0, $positionEquals);
-                $value = substr($token, $positionEquals + 1);
-            } else {
-                // empty value
-                $key = $token;
-                $value = '';
-            }
-
-            // decode the values
-            $key = rawurldecode($key);
-            $value = rawurldecode($value);
-
-            $positionBracket = strpos($key, '[');
-            if ($positionBracket === false || $key[strlen($key) - 1] != ']') {
-                // not an array
-                $query[$key] = urldecode($value);
-
-                continue;
-            }
-
-            // all the keys of a potential hierarchic array
-            $keys = explode('][', substr($key, $positionBracket + 1, -1));
-            $key = substr($key, 0, $positionBracket);
-            array_unshift($keys, $key);
-
-            $queryValue = &$query;
-
-            $numKeys = count($keys) - 1;
-            for ($i = 0; $i <= $numKeys; $i++) {
-                $key = $keys[$i];
-
-//                 if (!is_array($queryValue)) {
-//                     $queryValue = array();
-//                 }
-
-                if ($key == '') {
-                    $key = count($queryValue);
-                }
-
-                if ($i == $numKeys) {
-                    $queryValue[$key] = urldecode($value);
-                } elseif (!isset($queryValue[$key])) {
-                    $queryValue[$key] = array();
-                }
-
-                $queryValue = &$queryValue[$key];
-            }
-        }
+        parse_str($string, $query);
 
         return $query;
     }
