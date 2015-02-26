@@ -279,6 +279,38 @@ class Response {
     }
 
     /**
+     * Sets the HTTP status code to 200 Ok
+     * @return null
+     */
+    public function setIsOk() {
+        $this->statusCode = self::STATUS_CODE_OK;
+    }
+
+    /**
+     * Gets whether the status is 200 Ok
+     * @return boolean
+     */
+    public function isOk() {
+        return $this->statusCode == self::STATUS_CODE_OK;
+    }
+
+    /**
+     * Sets the HTTP status code to 404 Not Found
+     * @return null
+     */
+    public function setIsNotFound() {
+        $this->statusCode = self::STATUS_CODE_NOT_FOUND;
+    }
+
+    /**
+     * Gets whether the status is 404 Not Found
+     * @return boolean
+     */
+    public function isNotFound() {
+        return $this->statusCode == self::STATUS_CODE_NOT_FOUND;
+    }
+
+    /**
      * Adds a HTTP header.
      *
      * On Wikipedia you can find a {@link http://en.wikipedia.org/wiki/List_of_HTTP_headers list of HTTP headers}.
@@ -452,6 +484,14 @@ class Response {
         $this->headers->removeHeader(Header::HEADER_LOCATION);
 
         $this->statusCode = self::STATUS_CODE_OK;
+    }
+
+    /**
+     * Gets the location header
+     * @return string|null
+     */
+    public function getLocation() {
+        return $this->getHeader(Header::HEADER_LOCATION);
     }
 
     /**
