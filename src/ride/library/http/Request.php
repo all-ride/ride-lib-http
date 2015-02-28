@@ -114,9 +114,9 @@ class Request {
 
     /**
      * Constructs a new request
-     * @param string $method The method of the request
-     * @param string $path The requested path with query string
-     * @param string $protocol The HTTP protocol version
+     * @param string $path Requested path with query string
+     * @param string $method Method of the request
+     * @param string $protocol HTTP protocol version
      * @param HeaderContainer $headers A container with the request headers
      * @param string|array $body The body of the request, this can be $_POST
      * @return null
