@@ -160,6 +160,12 @@ class Response {
     const STATUS_CODE_UNPROCESSABLE_ENTITY = 422;
 
     /**
+     * HTTP status code for a update required status
+     * @var int
+     */
+    const STATUS_CODE_UPDATE_REQUIRED = 426;
+
+    /**
      * HTTP status code for a too many requests status
      * @var int
      */
@@ -235,7 +241,14 @@ class Response {
      * @return string
      */
     public function __toString() {
-        $response = $this->statusCode . "\r\n";
+        $response = $this->statusCode;
+
+        $statusPhrase = self::getStatusPhrase($this->statusCode, null);
+        if ($statusPhrase) {
+            $response .= ' ' . $statusPhrase;
+        }
+
+        $response .= "\r\n";
 
         foreach ($this->headers as $header) {
             $response .= (string) $header . "\r\n";
@@ -279,15 +292,15 @@ class Response {
     }
 
     /**
-     * Sets the HTTP status code to 200 Ok
+     * Sets the status code to 200 Ok
      * @return null
      */
-    public function setIsOk() {
+    public function setOk() {
         $this->statusCode = self::STATUS_CODE_OK;
     }
 
     /**
-     * Gets whether the status is 200 Ok
+     * Gets whether the status code is 200 Ok
      * @return boolean
      */
     public function isOk() {
@@ -295,19 +308,51 @@ class Response {
     }
 
     /**
-     * Sets the HTTP status code to 404 Not Found
+     * Sets the status code to 400 Bad Request
      * @return null
      */
-    public function setIsNotFound() {
+    public function setBadRequest() {
         $this->statusCode = self::STATUS_CODE_NOT_FOUND;
     }
 
     /**
-     * Gets whether the status is 404 Not Found
+     * Gets whether the status code is 400 Bad Request
+     * @return null
+     */
+    public function isBadRequest() {
+        return $this->statusCode == self::STATUS_CODE_BAD_REQUEST;
+    }
+
+    /**
+     * Sets the status code to 404 Not Found
+     * @return null
+     */
+    public function setNotFound() {
+        $this->statusCode = self::STATUS_CODE_NOT_FOUND;
+    }
+
+    /**
+     * Gets whether the status code is 404 Not Found
      * @return boolean
      */
     public function isNotFound() {
         return $this->statusCode == self::STATUS_CODE_NOT_FOUND;
+    }
+
+    /**
+     * Sets the status code to 405 Method Not Allowed
+     * @return null
+     */
+    public function setMethodNotAllowed() {
+        $this->statusCode = self::STATUS_CODE_METHOD_NOT_ALLOWED;
+    }
+
+    /**
+     * Gets whether the status code is 405 Method Not Allowed
+     * @return boolean
+     */
+    public function isMethodNotAllowed() {
+        return $this->statusCode == self::STATUS_CODE_METHOD_NOT_ALLOWED;
     }
 
     /**
@@ -808,9 +853,10 @@ class Response {
     /**
      * Gets the status phrase for the provided status code
      * @param integer $statusCode HTTP response status code
+     * @param string $default Default phrase
      * @return string HTTP response status phrase
      */
-    public static function getStatusPhrase($statusCode) {
+    public static function getStatusPhrase($statusCode, $default = 'Unknown Status') {
         $statusPhrases = array(
             self::STATUS_CODE_CONTINUE => 'Continue', // 100
             self::STATUS_CODE_SWITCHING_PROTOCOLS => 'Switching Protocols', // 101
@@ -835,13 +881,15 @@ class Response {
             self::STATUS_CODE_NOT_FOUND => 'Not Found', // 404
             self::STATUS_CODE_METHOD_NOT_ALLOWED => 'Method Not Allowed', //405
             self::STATUS_CODE_UNPROCESSABLE_ENTITY => 'Unprocessable Entity', //422
+            self::STATUS_CODE_UPDATE_REQUIRED => 'Update Required', //426
+            self::STATUS_CODE_TOO_MANY_REQUESTS => 'Too Many Requests', //429
             self::STATUS_CODE_SERVER_ERROR => 'Internal Server Error', // 500
             self::STATUS_CODE_NOT_IMPLEMENTED => 'Not Implemented', //501
             self::STATUS_CODE_SERVICE_UNAVAILABLE => 'Service Unavailable', //503
         );
 
         if (!isset($statusPhrases[$statusCode])) {
-            return 'Unknown Status';
+            return $default;
         }
 
         return $statusPhrases[$statusCode];
