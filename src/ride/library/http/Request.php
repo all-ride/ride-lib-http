@@ -334,10 +334,17 @@ class Request {
 
     /**
      * Gets the full requested URL
+     * @param boolean $trimQuery Set to true to remove the query from the result
      * @return string
      */
-    public function getUrl() {
-        return $this->getServerUrl() . $this->path;
+    public function getUrl($trimQuery = false) {
+        $path = $this->path;
+
+        if ($trimQuery) {
+            $path = str_replace($this->getQuery(), '', $path);
+        }
+
+        return $this->getServerUrl() . $path;
     }
 
     /**
