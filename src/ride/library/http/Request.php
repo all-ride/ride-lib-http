@@ -326,11 +326,9 @@ class Request {
         }
 
         if ($this->isSecure) {
-            k('secure');
             return 'https://' . $host;
         }
 
-        k('not secure');
         return 'http://' . $host;
     }
 
