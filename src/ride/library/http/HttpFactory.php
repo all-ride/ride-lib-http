@@ -145,11 +145,7 @@ class HttpFactory {
             $headers = $this->createHeaderContainerFromServer();
         }
 
-        $request = new $this->requestClass($path, $method, $protocol, $headers, $body);
-
-        if ($isSecure) {
-            $request->setIsSecure(true);
-        }
+        $request = new $this->requestClass($path, $method, $protocol, $headers, $body, $isSecure);
 
         return $request;
     }

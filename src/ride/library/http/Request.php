@@ -119,23 +119,23 @@ class Request {
      * @param string $protocol HTTP protocol version
      * @param HeaderContainer $headers A container with the request headers
      * @param string|array $body The body of the request, this can be $_POST
+     * @param boolean $isSecure
      * @return null
      */
-    public function __construct($path, $method = self::METHOD_GET, $protocol = 'HTTP/1.1', HeaderContainer $headers = null, $body = null) {
+    public function __construct($path, $method = self::METHOD_GET, $protocol = 'HTTP/1.1', HeaderContainer $headers = null, $body = null, $isSecure = false) {
         if ($headers) {
             $this->headers = $headers;
         } else {
             $this->headers = new HeaderContainer();
         }
 
+        $this->setIsSecure($isSecure);
         $this->setMethod($method);
         $this->setProtocol($protocol);
         $this->setPath($path);
         $this->setBody($body);
 
         $this->setCookies();
-
-        $this->isSecure = false;
 
         $this->parseOverridenMethod();
     }
@@ -326,9 +326,11 @@ class Request {
         }
 
         if ($this->isSecure) {
+            k('secure');
             return 'https://' . $host;
         }
 
+        k('not secure');
         return 'http://' . $host;
     }
 
