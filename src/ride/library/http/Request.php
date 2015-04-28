@@ -703,7 +703,7 @@ class Request {
      * @return boolean
      */
     public function isNoCache() {
-        return $this->headers->getCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_CACHE);
+        return $this->headers->getCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_CACHE) || $this->headers->getCacheControlDirective(HeaderContainer::CACHE_CONTROL_MAX_AGE) == '0';
     }
 
     /**
