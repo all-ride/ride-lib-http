@@ -312,7 +312,7 @@ class Response {
      * @return null
      */
     public function setBadRequest() {
-        $this->statusCode = self::STATUS_CODE_NOT_FOUND;
+        $this->statusCode = self::STATUS_CODE_BAD_REQUEST;
     }
 
     /**
