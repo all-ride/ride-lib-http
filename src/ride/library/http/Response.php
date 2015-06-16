@@ -324,6 +324,22 @@ class Response {
     }
 
     /**
+     * Sets whether the status code is 403 Forbidden
+     * @return boolean
+     */
+    public function setForbidden() {
+        $this->statusCode = self::STATUS_CODE_FORBIDDEN;
+    }
+
+    /**
+     * Gets whether the status code is 403 Forbidden
+     * @return boolean
+     */
+    public function isForbidden() {
+        return $this->statusCode == self::STATUS_CODE_FORBIDDEN;
+    }
+
+    /**
      * Sets the status code to 404 Not Found
      * @return null
      */
