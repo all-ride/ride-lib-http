@@ -210,7 +210,7 @@ class HttpFactory {
             $body = $this->mergeFiles($body, $_FILES);
         }
 
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+        if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || (isset($_SERVER['SCHEME']) && $_SERVER['SCHEME'] == 'https')) {
             $isSecure = true;
         } else {
             $isSecure = false;
