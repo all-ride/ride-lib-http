@@ -23,6 +23,12 @@ class Request {
     const METHOD_GET = 'GET';
 
     /**
+     * The PATCH method
+     * @var string
+     */
+    const METHOD_PATCH = 'PATCH';
+
+    /**
      * The POST method
      * @var string
      */
@@ -211,6 +217,14 @@ class Request {
      */
     public function isGet() {
         return $this->method == self::METHOD_GET;
+    }
+
+    /**
+     * Checks if this is a PATCH request
+     * @return boolean
+     */
+    public function isPatch() {
+        return $this->method == self::METHOD_PATCH;
     }
 
     /**
