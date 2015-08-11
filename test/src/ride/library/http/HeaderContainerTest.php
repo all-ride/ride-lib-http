@@ -37,17 +37,22 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
     public function testAddHeaderMultipleTimes() {
         $name = 'Name';
         $header = new Header($name, 'value');
+        $header2 = new Header($name, 'value2');
 
         $this->assertEquals(array(), $this->hc->getHeaders());
 
         $this->hc->addHeader($header);
         $this->hc->addHeader($header);
 
-        $this->assertEquals(array($header, $header), $this->hc->getHeaders());
+        $this->assertEquals(array($header), $this->hc->getHeaders());
 
         $this->hc->addHeader($header);
 
-        $this->assertEquals(array($header, $header, $header), $this->hc->getHeaders());
+        $this->assertEquals(array($header), $this->hc->getHeaders());
+
+        $this->hc->addHeader($header2);
+
+        $this->assertEquals(array($header, $header2), $this->hc->getHeaders());
     }
 
     public function testAddHeaderWithNameAndValue() {
@@ -82,34 +87,38 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
 
     public function testSetHeaderWithHeaderInstance() {
         $name = 'Name';
+        $name2 = 'Name2';
         $header = new Header($name, 'value');
+        $header2 = new Header($name2, 'value');
 
-        $this->hc->addHeader($header);
-        $this->hc->addHeader($header);
+        $this->hc->addHeader($name, 'old value');
+        $this->hc->addHeader($header2);
 
-        $this->assertEquals(array($header, $header), $this->hc->getHeaders());
+        $this->assertEquals(array(new Header($name, 'old value'), $header2), $this->hc->getHeaders());
 
         $this->hc->setHeader($header);
 
-        $this->assertEquals(array($header), $this->hc->getHeaders());
+        $this->assertEquals(array($header, $header2), $this->hc->getHeaders());
     }
 
     public function testSetHeaderWithNameAndValue() {
         $name = 'Name';
         $name2 = 'Name2';
+        $name3 = 'Name3';
         $value = 'value';
         $header = new Header($name, $value);
         $header2 = new Header($name2, $value);
+        $header3 = new Header($name3, $value);
 
         $this->hc->addHeader($header);
         $this->hc->addHeader($header);
         $this->hc->addHeader($header2);
 
-        $this->assertEquals(array($header, $header, $header2), $this->hc->getHeaders());
-
-        $this->hc->setHeader($name, $value, true);
-
         $this->assertEquals(array($header, $header2), $this->hc->getHeaders());
+
+        $this->hc->setHeader($name3, $value, true);
+
+        $this->assertEquals(array($header3, $header, $header2), $this->hc->getHeaders());
     }
 
     /**
@@ -167,12 +176,12 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($name, $header->getName());
         $this->assertEquals($value, $header->getValue());
 
-        $this->hc->addHeader($header);
+        $this->hc->addHeader($name, 'value2');
 
         $headers = $this->hc->getHeader($name);
 
         $this->assertTrue(is_array($headers));
-        $this->assertEquals(array($header, $header), $headers);
+        $this->assertEquals(array($header, new Header($name, 'value2')), $headers);
 
         $header = $this->hc->getHeader('Unexistant');
 
@@ -204,10 +213,9 @@ class HeaderContainerTest extends PHPUnit_Framework_TestCase {
         $header3 = new Header($name3, 'value');
 
         $this->hc->addHeader($name, 'value');
-        $this->hc->addHeader($header);
         $this->hc->addHeader($header2);
 
-        $this->assertEquals(array($header, $header, $header2), $this->hc->getHeaders());
+        $this->assertEquals(array($header, $header2), $this->hc->getHeaders());
 
         $this->hc->removeHeader($name);
 

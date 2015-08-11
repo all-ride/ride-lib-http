@@ -4,6 +4,7 @@ namespace ride\library\http;
 
 use ride\library\http\exception\HttpException;
 
+use \DateTime;
 use \ReflectionClass;
 use \ReflectionException;
 
@@ -89,6 +90,78 @@ class HttpFactory {
     }
 
     /**
+     * Creates a cookie instance from a set-cookie header
+     * @param string $string Cookie string
+     * @param string $domain Default domain
+     * @return Cookie
+     * @throws \ride\library\http\exception\HttpException when an invalid string
+     * is provided
+     */
+    public function createCookieFromString($string, $domain = null) {
+        $name = null;
+        $value = null;
+        $expires = 0;
+        $path = null;
+        $isSecure = false;
+        $isHttpOnly = false;
+
+        $tokens = explode(';', $string);
+        foreach ($tokens as $token) {
+            $token = trim($token);
+            if (!$token) {
+                continue;
+            }
+
+            $hasEquals = strpos($token, '=');
+
+            if ($name === null && !$hasEquals) {
+                throw new HttpException('Could not parse cookie: ' . $token . ' is not a valid attribute');
+            } elseif (!$hasEquals) {
+                $token = strtolower($token);
+                switch ($token) {
+                    case 'secure':
+                        $isSecure = true;
+
+                        break;
+                    case 'httponly':
+                        $isHttpOnly = true;
+
+                        break;
+                }
+            } else {
+                list($key, $val) = explode('=', $token, 2);
+                if ($name === null) {
+                    $name = $key;
+                    $value = $val;
+
+                    continue;
+                }
+
+                $key = strtolower($key);
+                switch ($key) {
+                    case 'expires':
+                        $date = DateTime::createFromFormat('D, d M Y H:i:s T', $val);
+                        if ($date) {
+                            $expires = $date->getTimestamp();
+                        }
+
+                        break;
+                    case 'domain':
+                        $domain = $val;
+
+                        break;
+                    case 'path':
+                        $path = $val;
+
+                        break;
+                }
+            }
+        }
+
+        return new Cookie($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly);
+    }
+
+    /**
      * Creates a header container from the $_SERVER variable
      * @return HeaderContainer
      */
@@ -145,7 +218,8 @@ class HttpFactory {
             $headers = $this->createHeaderContainerFromServer();
         }
 
-        $request = new $this->requestClass($path, $method, $protocol, $headers, $body, $isSecure);
+        $class = $this->getRequestClass();
+        $request = new $class($path, $method, $protocol, $headers, $body, $isSecure);
 
         return $request;
     }
@@ -177,8 +251,6 @@ class HttpFactory {
         } while ($header !== '' && $header !== null);
 
         $body = implode("\n", $data);
-
-        $class = $this->getRequestClass();
 
         return $this->createRequest($path, $method, $protocol, $headers, $body);
     }

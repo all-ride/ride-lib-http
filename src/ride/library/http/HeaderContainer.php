@@ -94,6 +94,7 @@ class HeaderContainer implements Iterator, Countable {
         }
 
         $headerName = $header->getName();
+        $headerValue = $header->getValue();
 
         if ($headerName == Header::HEADER_CACHE_CONTROL) {
             // make sure the cache control array is in sync with the header
@@ -114,7 +115,7 @@ class HeaderContainer implements Iterator, Countable {
                 if (!$found) {
                     $this->headers[$headerName][] = $header;
                 }
-            } elseif ($this->headers[$headerName]->getValue() !== $value) {
+            } elseif ($this->headers[$headerName]->getValue() !== $headerValue) {
                 // already a header set with this name, convert to array and
                 // add it
                 $this->headers[$headerName] = array(
@@ -149,10 +150,10 @@ class HeaderContainer implements Iterator, Countable {
         }
 
         if (isset($this->headers[$header->getName()])) {
-            unset($this->headers[$header->getName()]);
+            $this->headers[$header->getName()] = $header;
+        } else {
+            $this->addHeader($header, null, $prepend);
         }
-
-        $this->addHeader($header, null, $prepend);
     }
 
     /**

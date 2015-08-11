@@ -180,7 +180,7 @@ class RequestTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(array(), $request->getAcceptLanguage());
         $this->assertEquals(array(), $request->getIfNoneMatch());
         $this->assertNull($request->getIfModifiedSince());
-        $this->assertNull($request->isNoCache());
+        $this->assertFalse($request->isNoCache());
 
         $headers->addHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8');
         $headers->addHeader('Accept-Charset', '*/*');
