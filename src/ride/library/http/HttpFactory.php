@@ -140,7 +140,7 @@ class HttpFactory {
                 $key = strtolower($key);
                 switch ($key) {
                     case 'expires':
-                        $date = DateTime::createFromFormat('D, d M Y H:i:s T', $val);
+                        $date = DateTime::createFromFormat('D, d-M-Y H:i:s T', $val);
                         if ($date) {
                             $expires = $date->getTimestamp();
                         }
