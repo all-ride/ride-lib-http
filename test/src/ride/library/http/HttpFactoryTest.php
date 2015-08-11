@@ -73,7 +73,7 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         return array(
             array(new Cookie('name', 'value', 0, null, null, false, false), "name=value"),
             array(new Cookie('name', 'value', 0, null, null, true, true), "name=value; Secure; HttpOnly"),
-            array(new Cookie('name', 'value2', 1241307505, 'www.example.org', '/blog', true, true), "name=value2;domain=www.example.org; Expires=Sat, 02 May 2009 23:38:25 GMT; path=/blog; Secure; HttpOnly"),
+            array(new Cookie('name', 'value2', 1241307505, 'www.example.org', '/blog', true, true), "name=value2;domain=www.example.org; Expires=Sat, 02-May-2009 23:38:25 GMT; path=/blog; Secure; HttpOnly"),
         );
     }
 
