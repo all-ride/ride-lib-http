@@ -26,10 +26,12 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testToString() {
+        $statusCode = $this->response->getStatusCode();
+
         $this->response->setCookie(new Cookie('name', 'value'));
         $this->response->setBody('<html></html>');
 
-        $string = $this->response->getStatusCode() . "\r\n";
+        $string = $statusCode . ' ' . Response::getStatusPhrase($statusCode) . "\r\n";
         $string .= "Date: " . $this->response->getHeader(Header::HEADER_DATE) . "\r\n";
         $string .= "Set-Cookie: name=value; HttpOnly\r\n";
         $string .= "\r\n";
