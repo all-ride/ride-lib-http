@@ -859,11 +859,15 @@ class Response {
         }
 
         // set the status code
-        header($protocol . ' ' . $this->statusCode);
+        header($protocol . ' ' . $this->statusCode . ' ' . self::getStatusPhrase($this->statusCode));
 
         // set the headers
         foreach ($this->headers as $header) {
-            header((string) $header, false);
+            if ($header->getName() === Header::HEADER_LOCATION) {
+                header((string) $header, true, $this->statusCode);
+            } else {
+                header((string) $header, false);
+            }
         }
 
         // set the cookies
