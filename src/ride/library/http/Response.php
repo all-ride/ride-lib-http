@@ -395,10 +395,6 @@ class Response {
 
         $name = $header->getName();
 
-        if ($name == Header::HEADER_LOCATION && !$this->willRedirect()) {
-            $this->setStatusCode(self::STATUS_CODE_FOUND);
-        }
-
         if (in_array($name, array(Header::HEADER_DATE, Header::HEADER_LOCATION))) {
             $this->headers->setHeader($header);
         } else {
@@ -518,14 +514,15 @@ class Response {
      * valid redirect status code
      */
     public function setRedirect($url, $statusCode = null) {
-        if ($statusCode !== null) {
-            if (!is_integer($statusCode) || $statusCode < 300 || 400 <= $statusCode) {
-                throw new HttpException('Could not set redirect: invalid status code provided');
-            }
-
-            $this->setStatusCode($statusCode);
+        if ($statusCode === null) {
+            $statusCode = self::STATUS_CODE_FOUND;
         }
 
+        if (!is_integer($statusCode) || $statusCode < 300 || 400 <= $statusCode) {
+            throw new HttpException('Could not set redirect: invalid status code provided');
+        }
+
+        $this->setStatusCode($statusCode);
         $this->setHeader(Header::HEADER_LOCATION, $url);
     }
 
