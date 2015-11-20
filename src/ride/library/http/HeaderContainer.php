@@ -246,7 +246,7 @@ class HeaderContainer implements Iterator, Countable {
             throw new HttpException('Could not add cache control directive: provided directive is empty or not a string');
         }
 
-        if ($value !== true && (!is_scalar($value) || $value == '')) {
+        if ($value !== true && $value !== 0 && (!is_scalar($value) || $value == '')) {
             throw new HttpException('Could not add cache control directive: provided value is empty or not a scalar value');
         }
 
