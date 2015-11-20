@@ -641,6 +641,31 @@ class Response {
     }
 
     /**
+     * Sets or unsets the no-cache cache control directive.
+     *
+     * When set to true, all caches cannot cache the response.
+     * @param boolean $flag Set to false to unset the directive, true sets it
+     * @return null
+     */
+    public function setIsNoCache($flag = true) {
+        if ($flag) {
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_PUBLIC);
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_PRIVATE);
+            $this->headers->addCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_CACHE);
+        } else {
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_CACHE);
+        }
+    }
+
+    /**
+     * Gets the no-cache cache control directive
+     * @return boolean|null True if set, null otherwise
+     */
+    public function isNoCache() {
+        return $this->headers->getCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_CACHE);
+    }
+
+    /**
      * Sets the max age cache control directive
      *
      * When set to true, a shared cache must not cache the response.
