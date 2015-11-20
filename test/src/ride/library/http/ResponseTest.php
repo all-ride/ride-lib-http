@@ -76,13 +76,6 @@ class ResponseTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse($this->response->hasHeader('name'));
 
-        $this->assertEquals(Response::STATUS_CODE_OK, $this->response->getStatusCode());
-
-        $this->response->addHeader('Location', 'http://server');
-
-        $this->assertTrue($this->response->hasHeader('Location'));
-        $this->assertEquals(Response::STATUS_CODE_FOUND, $this->response->getStatusCode());
-
         $this->assertTrue($this->response->getHeaders() instanceof HeaderContainer);
     }
 
