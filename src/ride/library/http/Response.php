@@ -714,7 +714,6 @@ class Response {
         }
 
         $this->headers->addCacheControlDirective(HeaderContainer::CACHE_CONTROL_SHARED_MAX_AGE, $seconds);
-        $this->setIsPublic();
     }
 
     /**
