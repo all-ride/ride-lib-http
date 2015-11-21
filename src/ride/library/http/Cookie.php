@@ -176,7 +176,7 @@ class Cookie {
      * a valid timestamp
      */
     protected function setExpires($expires) {
-        if (!is_integer($expires) || $expires < 0) {
+        if (!is_integer($expires)) {
             throw new HttpException('Could not set the cookie expire date: provided date is not a UNIX timestamp');
         }
 
