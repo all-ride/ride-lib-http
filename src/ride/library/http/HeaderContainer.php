@@ -20,6 +20,12 @@ class HeaderContainer implements Iterator, Countable {
     const CACHE_CONTROL_NO_CACHE = 'no-cache';
 
     /**
+     * Name of the no store control directive
+     * @var string
+     */
+    const CACHE_CONTROL_NO_STORE = 'no-store';
+
+    /**
      * Name of the private cache control directive
      * @var string
      */

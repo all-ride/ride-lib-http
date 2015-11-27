@@ -666,6 +666,31 @@ class Response {
     }
 
     /**
+     * Sets or unsets the no-store cache control directive.
+     *
+     * When set to true, all caches cannot cache the response.
+     * @param boolean $flag Set to false to unset the directive, true sets it
+     * @return null
+     */
+    public function setIsNoStore($flag = true) {
+        if ($flag) {
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_PUBLIC);
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_PRIVATE);
+            $this->headers->addCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_STORE);
+        } else {
+            $this->headers->removeCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_STORE);
+        }
+    }
+
+    /**
+     * Gets the no-store cache control directive
+     * @return boolean|null True if set, null otherwise
+     */
+    public function isNoStore() {
+        return $this->headers->getCacheControlDirective(HeaderContainer::CACHE_CONTROL_NO_STORE);
+    }
+
+    /**
      * Sets the max age cache control directive
      *
      * When set to true, a shared cache must not cache the response.
