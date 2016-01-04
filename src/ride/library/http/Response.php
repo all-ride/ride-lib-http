@@ -142,6 +142,12 @@ class Response {
     const STATUS_CODE_METHOD_NOT_ALLOWED = 405;
 
     /**
+     * HTTP status code for a method not acceptable status
+     * @var int
+     */
+    const STATUS_CODE_METHOD_NOT_ACCEPTABLE = 406;
+
+    /**
      * HTTP status code for a conflict status
      * @var int
      */
@@ -927,6 +933,7 @@ class Response {
             self::STATUS_CODE_FORBIDDEN => 'Forbidden', // 403
             self::STATUS_CODE_NOT_FOUND => 'Not Found', // 404
             self::STATUS_CODE_METHOD_NOT_ALLOWED => 'Method Not Allowed', //405
+            self::STATUS_CODE_METHOD_NOT_ACCEPTABLE => 'Not Acceptable', //406
             self::STATUS_CODE_CONFLICT => 'Conflict', //409
             self::STATUS_CODE_GONE => 'Gone', //410
             self::STATUS_CODE_UNSUPPORTED_MEDIA_TYPE => 'Unsupported Media Type', //415
