@@ -90,7 +90,27 @@ class HttpFactory {
     }
 
     /**
-     * Creates a cookie instance from a set-cookie header
+     * Creates a cookie instance
+     * @param string $name Name of the cookie
+     * @param string $value Value for the cookie, leave null to delete the
+     * cookie
+     * @param integer $expires UNIX timestamp of the expires date
+     * @param string $domain Domain for the cookie
+     * @param string $path Path for the cookie
+     * @param boolean $isSecure Flag to use this cookie only on secure
+     * connections
+     * @param boolean $isHttp Flag to use this cookie only in HTTP requests,
+     * not in javascript calls
+     * @return null
+     * @throws \ride\library\http\exception\HttpException when a invalid value
+     * has been provided
+     */
+    public function createCookie($name, $value = null, $expires = 0, $domain = null, $path = null, $isSecure = false, $isHttpOnly = true) {
+        return new Cookie($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly);
+    }
+
+    /**
+     * Creates a cookie instance from a set-cookie header value
      * @param string $string Cookie string
      * @param string $domain Default domain
      * @return Cookie
@@ -158,7 +178,7 @@ class HttpFactory {
             }
         }
 
-        return new Cookie($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly);
+        return $this->createCookie($name, $value, $expires, $domain, $path, $isSecure, $isHttpOnly);
     }
 
     /**
@@ -438,6 +458,28 @@ class HttpFactory {
         $response->setBody($body);
 
         return $response;
+    }
+
+    /**
+     * Creates a data URI instance
+     * @param mixed $data Actual data
+     * @param string|null $mime MIME type of the data
+     * @param string|null $encoding Charset encoding of the data
+     * @param boolean $isBase64 Flag to see if the data should be (or was)
+     * base64 encoded
+     * @return DataUri
+     */
+    public function createDataUri($data, $encoding = null, $mime = null, $isBase64 = false) {
+        return new DataUri($data, $encoding, $mime, $isBase64);
+    }
+
+    /**
+     * Create a data URI instance from a data URI string
+     * @param string $data Data URI string
+     * @return DataUri
+     */
+    public function createDataUriFromString($data) {
+        return DataUri::decode($data);
     }
 
 }
