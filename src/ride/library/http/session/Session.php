@@ -2,6 +2,7 @@
 
 namespace ride\library\http\session;
 
+use ride\library\http\exception\HttpException;
 use ride\library\http\session\io\SessionIO;
 
 /**
@@ -67,10 +68,21 @@ class Session {
 
     /**
      * Writes the session to the storage
+     * @param string $id Id for the session, if not provided, the id of the last
+     * read call will be used
      * @return null
      */
-    public function write() {
-        $this->io->write($this->id, $this->data);
+    public function write($id = null) {
+        if (!$id) {
+            $id = $this->id;
+        }
+
+        if (!$id) {
+            throw new HttpException('Could not write session: no id provided');
+        }
+
+        $this->io->write($id, $this->data);
+        $this->isChanged = false;
     }
 
     /**
@@ -118,8 +130,10 @@ class Session {
      * @return null
      */
     public function reset() {
-        $this->data = array();
-        $this->isChanged = true;
+        if ($this->data) {
+            $this->data = array();
+            $this->isChanged = true;
+        }
     }
 
     /**

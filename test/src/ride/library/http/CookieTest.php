@@ -58,7 +58,6 @@ class CookieTest extends PHPUnit_Framework_TestCase {
             array('name', 'value', array(), 'domain', 'path', true, true),
             array('name', 'value', $this, 'domain', 'path', true, true),
             array('name', 'value', 'string', 'domain', 'path', true, true),
-            array('name', 'value', -500, 'domain', 'path', true, true),
             array('name', 'value', 0, array(), 'path', true, true),
             array('name', 'value', 0, $this, 'path', true, true),
             array('name', 'value', 0, 'domain', array(), true, true),
