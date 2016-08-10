@@ -90,6 +90,34 @@ class HttpFactory {
     }
 
     /**
+     * Sets the provided URL to the $_SERVER variable
+     * @param string $url URL to translate into $_SERVER elements
+     * @return boolean True when the URL has been set, false if the $_SERVER
+     * elements are already set
+     */
+    public function setServerUrl($url) {
+        if (!is_string($url)) {
+            throw new HttpException('Could not set the server URL: provided URL is not a string');
+        } elseif (isset($_SERVER['HTTP_HOST']) || isset($_SERVER['REQUEST_URI'])) {
+            return false;
+        }
+
+        $urlTokens = parse_url($url);
+        if ($urlTokens === false || !isset($urlTokens['host'])) {
+            throw new HttpException('Could not set the server URL: provided URL could not be parsed');
+        }
+
+        $_SERVER['HTTP_HOST'] = $urlTokens['host'] . (isset($urlTokens['port']) ? ':' . $urlTokens['port'] : '');
+        $_SERVER['REQUEST_URI'] = isset($urlTokens['path']) ? $urlTokens['path'] . (isset($urlTokens['query']) ? '?' . $urlTokens['query'] : '') : '/';
+
+        if (isset($urlTokens['scheme']) && $urlTokens['scheme'] === 'https') {
+            $_SERVER['HTTPS'] = 'on';
+        }
+
+        return true;
+    }
+
+    /**
      * Creates a cookie instance
      * @param string $name Name of the cookie
      * @param string $value Value for the cookie, leave null to delete the

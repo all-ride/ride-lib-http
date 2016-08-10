@@ -60,6 +60,69 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         );
     }
 
+    public function testSetServerUrlWithSimpleUrl() {
+        $_SERVER = array();
+
+        $result = $this->httpFactory->setServerUrl('http://www.example.com');
+
+        $this->assertTrue($result);
+        $this->assertTrue(isset($_SERVER['HTTP_HOST']));
+        $this->assertEquals('www.example.com', $_SERVER['HTTP_HOST']);
+        $this->assertTrue(isset($_SERVER['REQUEST_URI']));
+        $this->assertEquals('/', $_SERVER['REQUEST_URI']);
+        $this->assertFalse(isset($_SERVER['HTTPS']));
+    }
+
+    public function testSetServerUrlWithAdvancedUrl() {
+        $_SERVER = array();
+
+        $result = $this->httpFactory->setServerUrl('https://www.example.com:8080/path/to/action?var=value');
+
+        $this->assertTrue($result);
+        $this->assertTrue(isset($_SERVER['HTTP_HOST']));
+        $this->assertEquals('www.example.com:8080', $_SERVER['HTTP_HOST']);
+        $this->assertTrue(isset($_SERVER['REQUEST_URI']));
+        $this->assertEquals('/path/to/action?var=value', $_SERVER['REQUEST_URI']);
+        $this->assertTrue(isset($_SERVER['HTTPS']));
+        $this->assertEquals('on', $_SERVER['HTTPS']);
+    }
+
+    public function testSetServerUrlDoesNothingWhenAlreadySet() {
+        $_SERVER = array(
+            'HTTP_HOST' => 'server',
+            'HTTP_CONNECTION' => 'keep-alive',
+            'REQUEST_METHOD' => 'POST',
+            'PATH' => '/usr/local/bin:/usr/bin:/bin',
+            'SERVER_NAME' => 'localhost',
+            'SERVER_PROTOCOL' => 'HTTP/1.1',
+            'REQUEST_URI' => '/path/to?action=content',
+        );
+
+        $result = $this->httpFactory->setServerUrl('https://www.example.com');
+
+        $this->assertFalse($result);
+        $this->assertEquals('server', $_SERVER['HTTP_HOST']);
+    }
+
+    /**
+     * @dataProvider providerSetServerUrlThrowsExceptionWhenInvalidUrlProvided
+     * @expectedException ride\library\http\exception\HttpException
+     */
+    public function testSetServerUrlThrowsExceptionWhenInvalidUrlProvided($url) {
+        $this->httpFactory->setServerUrl($url);
+    }
+
+    public function providerSetServerUrlThrowsExceptionWhenInvalidUrlProvided() {
+        return array(
+            array(null),
+            array(false),
+            array('server'),
+            array('a simple sentence'),
+            array(array()),
+            array($this),
+        );
+    }
+
     /**
      * @dataProvider providerCreateCookieFromString
      */
@@ -115,23 +178,6 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testCreateRequestFromServer() {
-        $_SERVER = array();
-        $_POST = array();
-        $headers = new HeaderContainer();
-        $headers->addHeader('Host', 'localhost');
-        $request = new Request('/', 'GET', 'HTTP/1.0', $headers, array());
-
-        $result = $this->httpFactory->createRequestFromServer();
-        $this->assertEquals($request, $result);
-
-        $_SERVER = array(
-            'SCRIPT_NAME' => 'index.php',
-        );
-        $request = new Request('/index.php', 'GET', 'HTTP/1.0', $headers, array());
-
-        $result = $this->httpFactory->createRequestFromServer();
-        $this->assertEquals($request, $result);
-
         $_SERVER = array(
             'HTTP_HOST' => 'server',
             'HTTP_CONNECTION' => 'keep-alive',
@@ -145,15 +191,60 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         $_POST = array(
             'var1' => 'value1',
         );
-        $headers->setHeader('Host', 'server');
-        $headers->addHeader('Connection', 'keep-alive');
 
-        $request = new Request('/path/to?action=content', 'POST', 'HTTP/1.1', $headers, $_POST);
-        $request->setIsSecure(true);
+        $expectedHeaders = new HeaderContainer();
+        $expectedHeaders->setHeader('Host', 'server');
+        $expectedHeaders->addHeader('Connection', 'keep-alive');
+
+        $expectedRequest = new Request('/path/to?action=content', 'POST', 'HTTP/1.1', $expectedHeaders, $_POST);
+        $expectedRequest->setIsSecure(true);
 
         $result = $this->httpFactory->createRequestFromServer();
 
-        $this->assertEquals($request, $result);
+        $this->assertEquals($expectedRequest, $result);
+    }
+
+    public function testCreateRequestFromServerWithEmptyVariables() {
+        $_SERVER = array();
+        $_POST = array();
+
+        $expectedHeaders = new HeaderContainer();
+        $expectedHeaders->addHeader('Host', 'localhost');
+        $expectedRequest = new Request('/', 'GET', 'HTTP/1.0', $expectedHeaders, array());
+
+        $result = $this->httpFactory->createRequestFromServer();
+
+        $this->assertEquals($expectedRequest, $result);
+    }
+
+    public function testCreateRequestFromServerWithScriptName() {
+        $_SERVER = array(
+            'SCRIPT_NAME' => 'index.php',
+        );
+        $_POST = array();
+
+        $expectedHeaders = new HeaderContainer();
+        $expectedHeaders->addHeader('Host', 'localhost');
+        $expectedRequest = new Request('/index.php', 'GET', 'HTTP/1.0', $expectedHeaders, array());
+
+        $result = $this->httpFactory->createRequestFromServer();
+
+        $this->assertEquals($expectedRequest, $result);
+    }
+
+    public function testCreateRequestFromServerWithSetServerUrl() {
+        $_SERVER = array();
+        $_POST = array();
+
+        $expectedHeaders = new HeaderContainer();
+        $expectedHeaders->addHeader('Host', 'www.example.com:8080');
+        $expectedRequest = new Request('/path/to/action?var=value', 'GET', 'HTTP/1.0', $expectedHeaders, array());
+        $expectedRequest->setIsSecure(true);
+
+        $this->httpFactory->setServerUrl('https://www.example.com:8080/path/to/action?var=value');
+        $result = $this->httpFactory->createRequestFromServer();
+
+        $this->assertEquals($expectedRequest, $result);
     }
 
     public function testCreateRequestFromString() {
