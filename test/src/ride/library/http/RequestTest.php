@@ -147,7 +147,8 @@ class RequestTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSession() {
-        $sessionIo = $this->getMock('ride\\library\\http\\session\\io\\SessionIO');
+        $sessionIo = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                          ->getMock();
         $session = new Session($sessionIo);
 
         $request = new Request('/');

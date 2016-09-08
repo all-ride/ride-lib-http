@@ -7,7 +7,9 @@ use \PHPUnit_Framework_TestCase;
 class SessionTest extends PHPUnit_Framework_TestCase {
 
     public function testConstruct() {
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
 
         $session = new Session($io);
 
@@ -17,7 +19,9 @@ class SessionTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testGetSet() {
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
 
         $session = new Session($io);
         $session->set('var', 'value');
@@ -42,7 +46,9 @@ class SessionTest extends PHPUnit_Framework_TestCase {
             'var1' => 'value1',
         );
 
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
         $io->expects($this->once())->method('read')->with($this->equalTo($id))->will($this->returnValue($data));
 
         $session = new Session($io);
@@ -56,7 +62,9 @@ class SessionTest extends PHPUnit_Framework_TestCase {
     public function testWrite() {
         $id = 'id';
 
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
         $io->expects($this->once())->method('write')->with($this->equalTo($id), $this->equalTo(array('var' => 'value', 'var2' => 'value2')));
 
         $session = new Session($io);
@@ -72,7 +80,9 @@ class SessionTest extends PHPUnit_Framework_TestCase {
      * @expectedException ride\library\http\exception\HttpException
      */
     public function testWriteThrowsExceptionWhenNoIdProvided() {
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
 
         $session = new Session($io);
         $session->write();
@@ -84,7 +94,9 @@ class SessionTest extends PHPUnit_Framework_TestCase {
             'var1' => 'value1',
         );
 
-        $io = $this->getMock('ride\\library\\http\\session\\io\\SessionIO', array('getTimeout', 'clean', 'read', 'write'));
+        $io = $this->getMockBuilder('ride\\library\\http\\session\\io\\SessionIO')
+                   ->setMethods(array('getTimeout', 'clean', 'read', 'write'))
+                   ->getMock();
         $io->expects($this->once())->method('read')->with($this->equalTo($id))->will($this->returnValue($data));
 
         $session = new Session($io);
