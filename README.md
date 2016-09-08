@@ -87,3 +87,11 @@ $dataUri->encode(); // 'data:text/plain;base64,SGVsbG8sIFdvcmxkIQ%3D%3D'
 $dataUri = $httpFactory->createDataUriFromString($dataUri->encode());
 $dataUri->getValue(); // Hello, World!
 ```
+
+## Installation
+
+You can use [Composer](http://getcomposer.org) to install this library.
+
+```
+composer require ride/lib-http
+```
