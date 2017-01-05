@@ -540,7 +540,12 @@ class Request {
         foreach ($headers as $header) {
             $cookies = explode(';', $header);
             foreach ($cookies as $cookie) {
-                list($name, $value) = explode('=', trim($cookie), 2);
+                if (strpos($cookie, '=')) {
+                    list($name, $value) = explode('=', trim($cookie), 2);
+                } else {
+                    $name = $cookie;
+                    $value = true;
+                }
 
                 $this->cookies[$name] = $value;
             }
