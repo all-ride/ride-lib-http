@@ -404,7 +404,7 @@ class Request {
      * @return string
     */
     public function getQueryParametersAsString() {
-        return $this->queryParameters ? http_build_query($this->getQueryParameters()) : null;
+        return $this->queryParameters || $this->query ? http_build_query($this->getQueryParameters()) : null;
     }
 
     /**
