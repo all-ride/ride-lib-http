@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1] - 2017-03-28
+### Updated
+- fixed getQueryParametersAsString to return the correct value when queryParameters are not parsed yet
+- implemented X-Scheme header to see if incoming request is HTTPS
+
 ## [1.2.0] - 2017-01-05
 ### Updated
 - fixed incoming cookie handling when cookie has no value
