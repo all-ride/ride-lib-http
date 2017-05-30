@@ -330,13 +330,28 @@ class HttpFactory {
             $body = $this->mergeFiles($body, $_FILES);
         }
 
+        $isSecure = false;
         if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
-            (isset($_SERVER['HTTP_SCHEME']) && $_SERVER['HTTP_SCHEME'] == 'https') ||
-            (isset($_SERVER['HTTP_X_SCHEME']) && $_SERVER['HTTP_X_SCHEME'] == 'https')
+            (isset($_SERVER['HTTP_SCHEME']) && strtolower($_SERVER['HTTP_SCHEME']) === 'https') ||
+            (isset($_SERVER['HTTP_X_SCHEME']) && strtolower($_SERVER['HTTP_X_SCHEME']) === 'https') ||
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
         ) {
             $isSecure = true;
-        } else {
-            $isSecure = false;
+        } elseif (isset($_SERVER['HTTP_FORWARDED'])) {
+            $directives = explode(';', $_SERVER['HTTP_FORWARDED']);
+            foreach ($directives as $directive) {
+                $directive = trim($directive);
+                if (!strpos($directive, '=')) {
+                    continue;
+                }
+
+                list($directive, $identifier) = explode('=', $directive, 2);
+                if (strtolower($directive) === 'proto' && strtolower($identifier) === 'https') {
+                    $isSecure = true;
+
+                    break;
+                }
+            }
         }
 
         return $this->createRequest($path, null, null, null, $body, $isSecure);

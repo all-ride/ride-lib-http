@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.2] - 2017-05-30
+### Updated
+- implemented X-Forwarded-For and Forwarded headers
+
 ## [1.2.1] - 2017-03-28
 ### Updated
 - fixed getQueryParametersAsString to return the correct value when queryParameters are not parsed yet

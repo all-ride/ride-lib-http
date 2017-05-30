@@ -247,6 +247,37 @@ class HttpFactoryTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expectedRequest, $result);
     }
 
+    /**
+     * @dataProvider provideCreateRequestFromServerWithHttps
+     */
+    public function testCreateRequestFromServerWithHttps($server, $headers = array()) {
+        $_SERVER = $server;
+        $_POST = array();
+
+        $expectedHeaders = new HeaderContainer();
+        $expectedHeaders->addHeader('Host', 'localhost');
+        foreach ($headers as $header => $value) {
+            $expectedHeaders->addHeader($header, $value);
+        }
+        $expectedRequest = new Request('/', 'GET', 'HTTP/1.0', $expectedHeaders, array());
+        $expectedRequest->setIsSecure(true);
+
+        $result = $this->httpFactory->createRequestFromServer();
+
+        $this->assertEquals($expectedRequest, $result);
+    }
+
+    public function provideCreateRequestFromServerWithHttps() {
+        return array(
+            array(array('HTTPS' => 'on')),
+            array(array('HTTP_SCHEME' => 'https'), array('Scheme' => 'https')),
+            array(array('HTTP_X_SCHEME' => 'https'), array('X-Scheme' => 'https')),
+            array(array('HTTP_X_FORWARDED_PROTO' => 'https'), array('X-Forwarded-Proto' => 'https')),
+            array(array('HTTP_FORWARDED' => 'proto=https'), array('Forwarded' => 'proto=https')),
+            array(array('HTTP_FORWARDED' => 'for=192.0.2.60; proto=https; by=203.0.113.43'), array('Forwarded' => 'for=192.0.2.60; proto=https; by=203.0.113.43')),
+        );
+    }
+
     public function testCreateRequestFromString() {
         $string =
 'GET /path/to?var1=value HTTP/1.1
