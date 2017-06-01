@@ -332,6 +332,7 @@ class HttpFactory {
 
         $isSecure = false;
         if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ||
+            (isset($_SERVER['REQUEST_SCHEME']) && strtolower($_SERVER['REQUEST_SCHEME']) === 'https') ||
             (isset($_SERVER['HTTP_SCHEME']) && strtolower($_SERVER['HTTP_SCHEME']) === 'https') ||
             (isset($_SERVER['HTTP_X_SCHEME']) && strtolower($_SERVER['HTTP_X_SCHEME']) === 'https') ||
             (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
