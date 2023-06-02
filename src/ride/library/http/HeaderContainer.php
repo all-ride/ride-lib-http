@@ -368,6 +368,7 @@ class HeaderContainer implements Iterator, Countable {
      * Sets the internal pointer of the iterator to its first element
      * @return null
      */
+    #[\ReturnTypeWillChange]
     public function rewind() {
         reset($this->headers);
         unset($this->iteratorChildren);
@@ -377,6 +378,7 @@ class HeaderContainer implements Iterator, Countable {
      * Gets the current element in the current array
      * return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current() {
         if (isset($this->iteratorChildren)) {
             return current($this->iteratorChildren);
@@ -389,6 +391,7 @@ class HeaderContainer implements Iterator, Countable {
      * Gets the index element of the current array position in the current array.
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function key() {
         if (isset($this->iteratorChildren)) {
             return key($this->iteratorChildren);
@@ -401,6 +404,7 @@ class HeaderContainer implements Iterator, Countable {
      * Gets the current element and advances the internal array pointer
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function next() {
         if (isset($this->iteratorChildren)) {
             $next = next($this->iteratorChildren);
@@ -423,6 +427,7 @@ class HeaderContainer implements Iterator, Countable {
      * Checks if the iterator current position is valid
      * @return boolean
      */
+    #[\ReturnTypeWillChange]
     public function valid() {
         return $this->current() !== false;
     }
@@ -431,6 +436,7 @@ class HeaderContainer implements Iterator, Countable {
      * Counts the number of headers
      * @return integer
      */
+    #[\ReturnTypeWillChange]
     public function count() {
         $total = 0;
 
