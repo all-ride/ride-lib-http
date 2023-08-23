@@ -12,7 +12,7 @@ class Request {
 
     /**
      * The HEAD method
-     * @var string
+     * @ var string
      */
     const METHOD_HEAD = 'HEAD';
 
@@ -354,7 +354,7 @@ class Request {
     public function getUrl($trimQuery = false) {
         $path = $this->path;
 
-        if ($trimQuery) {
+        if ($trimQuery && $this->getQuery()) {
             $path = str_replace($this->getQuery(), '', $path);
         }
 

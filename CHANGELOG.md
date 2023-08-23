@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+##[1.3.1] - 2023-06-05
+### Updated
+- str_replace won't allow null values fix
+## [1.3] - 2023-06-01
+### Updated
+- Added ReturnTypeWillChange attribute for php 8.1
 ## [1.2.3] - 2017-06-01
 ### Updated
 - implemented $_SERVER['REQUEST_SCHEME'] to detect HTTPS
