@@ -118,6 +118,14 @@ class Request {
      */
     protected $session;
 
+    protected $accept;
+
+    protected $acceptLanguage;
+    protected $acceptCharset;
+    protected $acceptEncoding;
+    protected $ifNoneMatch;
+    protected $ifModifiedSince;
+
     /**
      * Constructs a new request
      * @param string $path Requested path with query string
