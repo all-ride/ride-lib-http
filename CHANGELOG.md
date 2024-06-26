@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0] - 2024-06-24
+### Updated
+- Updated to be compatible with php 8.3
 ##[1.3.1] - 2023-06-05
 ### Updated
 - str_replace won't allow null values fix
